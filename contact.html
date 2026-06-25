@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — Seawind Solution | Get In Touch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="animations.css" />
+  <link rel="stylesheet" href="inner.css" />
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display:none;">
+    <defs>
+      <filter id="gooey">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+        <feBlend in="SourceGraphic" in2="goo" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="page-loader" id="pageLoader" aria-hidden="true">
+    <img src="images/loader/loaderimage (1).png" alt="Loading..." class="loader-custom-img" />
+    <span class="loader-text">Seawind</span>
+  </div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="site-waves" aria-hidden="true">
+    <div class="site-wave site-wave-1"></div>
+    <div class="site-wave site-wave-2"></div>
+    <div class="site-wave site-wave-3"></div>
+  </div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-frame logo-frame--nav">
+          <img src="images/logo/trademark-logo-new.png" alt="Seawind Solution" class="logo-img logo-img--nav" />
+        </span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="technologies.html">Tech</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="nav-active">Contact</a></li>
+        <li><a href="contact.html" class="btn-nav">Get Started</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+    <div class="container">
+      <div class="page-hero-content">
+        <span class="section-tag">Get In Touch</span>
+        <h1>Let's Build Something <span class="gradient-text gradient-text--animated">Great Together</span></h1>
+        <p>Tell us about your project and we'll get back to you within 24 hours.</p>
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span>›</span>
+          <span>Contact</span>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- GLOBAL OFFICES -->
+  <section class="section offices-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Worldwide</span>
+        <h2>Our <span class="gradient-text">Global Offices</span></h2>
+        <p>Reach Seawind Solution at any of our locations — India, UAE, or UK.</p>
+      </div>
+      <div class="offices-grid reveal">
+        <article class="office-card featured-office tilt-card">
+          <div class="office-flag">
+            <img src="images/contact_page/flag.png" alt="India" class="office-flag-img" />
+          </div>
+          <h3>Seawind Solution Pvt. Ltd.</h3>
+          <p>B-1103, Mondeal Heights, Nr. Novotel Hotel, SG Highway, Nr. Iscon Circle, Ahmedabad, Gujarat, India</p>
+          <a href="tel:+918141887285">+91 81418 87285</a>
+        </article>
+        <article class="office-card tilt-card">
+          <div class="office-flag">
+            <img src="images/contact_page/united-arab-emirates.png" alt="United Arab Emirates" class="office-flag-img" />
+          </div>
+          <h3>Seawind Solution FZ-LLC</h3>
+          <p>FOB50431 Compass Building, Al Shohada Road, AL Hamra Industrial Zone-FZ, Ras Al Khaimah, United Arab Emirates</p>
+          <a href="tel:+971506787900">+971 50 6787900</a>
+        </article>
+        <article class="office-card tilt-card">
+          <div class="office-flag">
+            <img src="images/contact_page/united-kingdom.png" alt="United Kingdom" class="office-flag-img" />
+          </div>
+          <h3>Seawind Solution Ltd.</h3>
+          <p>265, 1st Floor, Melton Road, Leicester LE4 7AM, London, UK</p>
+          <a href="tel:+442080902390">+44 20 8090 2390</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="section contact-section" id="contact-form">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Info Side -->
+        <div class="contact-info reveal-left">
+          <span class="section-tag">Contact Info</span>
+          <h2>We'd Love to <span class="gradient-text">Hear From You</span></h2>
+          <p style="color:var(--muted);margin:20px 0 36px;line-height:1.8;">Whether you have a project in mind, a question about our services, or just want to say hello — our team is ready to help.</p>
+
+          <div class="contact-details">
+            <div class="contact-detail-item">
+              <div class="contact-icon">📍</div>
+              <div>
+                <h4>Head Office</h4>
+                <p>B-1103, Mondeal Heights, SG Highway, Ahmedabad, Gujarat, India</p>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-icon">📞</div>
+              <div>
+                <h4>Phone</h4>
+                <p><a href="tel:+918141887285">+91 81418 87285</a> · <a href="tel:+918141887287">+91 81418 87287</a></p>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-icon">✉️</div>
+              <div>
+                <h4>Email</h4>
+                <p><a href="mailto:info@seawindsolution.com">info@seawindsolution.com</a></p>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-icon">🕐</div>
+              <div>
+                <h4>Business Hours</h4>
+                <p>Mon – Sat: 9:00 AM – 7:00 PM IST</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-social">
+            <h4>Follow Us</h4>
+            <div class="social-links" style="margin-top:12px;">
+              <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a2.7 2.7 0 0 0-2.7-2.7c-.7 0-1.5.4-1.9 1v-.9h-2.4v7.9h2.4v-4.6c0-.7.6-1.3 1.3-1.3a1.3 1.3 0 0 1 1.3 1.3v4.6h2.4M6.9 8.6A1.4 1.4 0 0 0 8.3 7.2 1.4 1.4 0 0 0 6.9 5.8a1.4 1.4 0 0 0-1.4 1.4 1.4 1.4 0 0 0 1.4 1.4m1.2 9.9v-7.9H5.7v7.9h2.4z"/></svg></a>
+              <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/></svg></a>
+              <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg></a>
+            </div>
+          </div>
+
+          <div class="contact-map">
+            <iframe
+              src="https://maps.google.com/maps?q=Seawind+Solution+Pvt+Ltd,+Mondeal+Heights,+SG+Highway,+Ahmedabad&output=embed&z=15"
+              width="100%"
+              height="220"
+              style="border:0; border-radius:12px; display:block; margin-top:28px;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Seawind Solution Office Location"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Form Side -->
+        <div class="contact-form-wrap reveal-right">
+          <form class="contact-form" id="contactForm" data-form-type="contact">
+            <h3>Leave A Message</h3>
+            <p style="color:var(--muted);margin-bottom:20px;font-size:0.95rem;">Fill out the form below and we'll respond within 24 hours.</p>
+
+            <div class="inquiry-tabs" role="tablist" aria-label="Inquiry type">
+              <button type="button" class="inquiry-tab active" data-inquiry="Account">Account</button>
+              <button type="button" class="inquiry-tab" data-inquiry="Service">Service</button>
+              <button type="button" class="inquiry-tab" data-inquiry="Pricing">Pricing</button>
+              <button type="button" class="inquiry-tab" data-inquiry="Support">Support</button>
+            </div>
+            <input type="hidden" id="inquiryType" name="inquiryType" value="Account" />
+
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" name="firstName" placeholder="John" required />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Doe" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" placeholder="john@company.com" required />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" />
+            </div>
+
+            <div class="form-group">
+              <label for="service">Service Interested In</label>
+              <select id="service" name="service">
+                <option value="">Select a service...</option>
+                <option>Web Development</option>
+                <option>Mobile App Development</option>
+                <option>Digital Marketing / SEO</option>
+                <option>Cloud Hosting</option>
+                <option>AI Solutions</option>
+                <option>Branding & Design</option>
+                <option>Staffing Solutions</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="budget">Project Budget</label>
+              <select id="budget" name="budget">
+                <option value="">Select budget range...</option>
+                <option>Under ₹50,000</option>
+                <option>₹50,000 – ₹2,00,000</option>
+                <option>₹2,00,000 – ₹5,00,000</option>
+                <option>₹5,00,000+</option>
+                <option>Let's discuss</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Project Brief *</label>
+              <textarea id="message" name="message" rows="5" placeholder="Tell us about your project, goals, and timeline..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary btn-full contact-submit-btn" id="contactSubmitBtn">
+              <span class="btn-text default-text">Send Message <span class="btn-arrow">→</span></span>
+              <span class="btn-text success-text" style="display:none;">✓ Message Sent!</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="logo footer-logo">
+            <span class="logo-frame logo-frame--footer">
+              <img src="images/logo/trademark-logo-new.png" alt="Seawind Solution" class="logo-img logo-img--footer" />
+            </span>
+          </a>
+          <p>India's leading digital agency delivering world-class web, mobile, and AI solutions since 2012.</p>
+          <div class="social-links">
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a2.7 2.7 0 0 0-2.7-2.7c-1.2 0-1.8.7-2.1 1.2v-1h-3.3v7.8h3.3v-4.2c0-.2 0-.4.1-.6.2-.4.5-.8 1.1-.8.8 0 1.1.6 1.1 1.5v4.1h3.3M7.3 8.7c1.1 0 1.8-.7 1.8-1.7s-.7-1.7-1.8-1.7-1.8.7-1.8 1.7.7 1.7 1.8 1.7m1.6 9.8V10.7H5.6v7.8h3.3z"/></svg></a>
+            <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.2 4H19.8L15.2 9.4L20.6 16.5H17.4L14.9 13.2L12 17.2H10.4L15.3 11.5L10.1 4.7H13.4L15.7 7.7L18.2 4M17.6 15.6H18.5L13.1 8.5H12.2L17.6 15.6Z"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6m8.4 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-4 1a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg></a>
+            <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7h-2.54v-2.9h2.54v-2.21c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h5>Services</h5>
+            <a href="services/web-services.html">Web Development</a>
+            <a href="services/mobile-app-development.html">Mobile Apps</a>
+            <a href="services/ai-solutions.html">AI Solutions</a>
+            <a href="services/digital-marketing.html">Digital Marketing</a>
+            <a href="services/website-hosting.html">Hosting</a>
+          </div>
+          <div class="footer-col">
+            <h5>Company</h5>
+            <a href="about.html">About Us</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="careers.html">Careers</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h5>Contact</h5>
+            <a href="mailto:info@seawindsolution.com">info@seawindsolution.com</a>
+            <a href="tel:+918141887285">+91 81418 87285</a>
+            <a href="tel:+918141887287">+91 81418 87287</a>
+            <a href="#">Ahmedabad, Gujarat, India</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Seawind Solution. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="forms-config.js"></script>
+  <script src="forms.js"></script>
+  <script src="script.js"></script>
+  <script src="animations.js"></script>
+  <script src="inner.js"></script>
+</body>
+</html>
