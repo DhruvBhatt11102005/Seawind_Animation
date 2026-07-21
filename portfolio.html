@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="animations.css" />
   <link rel="stylesheet" href="inner.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="imagetrail.js"></script>
 </head>
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display:none;"><defs><filter id="gooey"><feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" /><feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" /><feBlend in="SourceGraphic" in2="goo" /></filter></defs></svg>
@@ -87,69 +89,26 @@
         <h2>Our <span class="gradient-text">Clients</span></h2>
         <p>Over 3,500+ businesses across industries have partnered with Seawind Solution.</p>
       </div>
-      <div class="clients-logo-grid reveal">
-        <div class="client-logo-card"><img src="images/client/1701422245_1635483488_biki.png" alt="Biki" /></div>
-        <div class="client-logo-card"><img src="images/client/1701422343_1594376391_indexpell.png" alt="Indexpell" /></div>
-        <div class="client-logo-card"><img src="images/client/1701422773_1642661806_1635482840_actilife.png" alt="Actilife" /></div>
-        <div class="client-logo-card"><img src="images/client/1715689843_1588249167_newsofgujarat.jpg" alt="News of Gujarat" /></div>
-        <div class="client-logo-card"><img src="images/client/1715689885_1588069727_joyous.png" alt="Joyous" /></div>
-        <div class="client-logo-card"><img src="images/client/1715692186_1587194808_pod_logo.png" alt="POD" /></div>
-        <div class="client-logo-card"><img src="images/client/1715692300_1588069564_the-phone.png" alt="The Phone Garage" /></div>
-        <div class="client-logo-card"><img src="images/client/1715692402_1588069580_solitaire.png" alt="Solitaire" /></div>
-        <div class="client-logo-card"><img src="images/client/1715692438_1588069594_iid.png" alt="IID" /></div>
-        <div class="client-logo-card"><img src="images/client/1715692512_1588249329_ferrum.jpg" alt="Ferrum" /></div>
-        <div class="client-logo-card"><img src="images/client/1715692558_1588069629_kartzone.png" alt="Kart Zone" /></div>
-        <div class="client-logo-card"><img src="images/trust_by/1723627523_logo-06.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/trust_by/1723627537_logo-07.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/trust_by/1723627551_logo-08.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/trust_by/1723627565_logo-09.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/trust_by/1723627580_logo-10.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/trust_by/1723627603_logo-11.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/trust_by/1723627627_logo-12.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/trust_by/1723627643_logo-13.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/trust_by/1723627656_logo-14.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/trust_by/1733725545_ViralKar_Logo.jpg" alt="ViralKar" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577091792_logo41.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577091808_logo40.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577091828_logo51.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577091847_logo49.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577103529_logo48.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577103556_logo47.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577103610_logo46.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577103644_logo57.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577103695_logo56.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577103984_logo55.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577104007_logo54.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577104024_logo53.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577104044_logo52.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577104087_logo60.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577104148_logo59.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577104170_logo58.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577104240_logo45.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1577104611_logo44.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452563_logo15.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452608_logo16.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452652_logo18.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452794_logo17.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452813_logo19.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452834_logo20.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452852_logo21.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452899_logo22.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452916_logo23.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452943_logo24.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452973_logo25.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580452995_logo26.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580453021_logo27.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580453041_logo28.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580453068_logo29.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580453089_logo35.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580453112_logo36.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580453132_logo37.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580453316_logo38.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1580453333_logo39.jpg" alt="Client" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1733724681_1597733346_sbi.png" alt="SBI" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1771829812_logovrri.png" alt="VRRI" /></div>
-        <div class="client-logo-card"><img src="images/portfolio/1733725545_ViralKar_Logo.jpg" alt="ViralKar" /></div>
+      <!-- Interactive Variant Control Buttons -->
+      <div class="trail-controls-bar reveal">
+        <button class="trail-variant-btn active" data-variant="1">Variant 1</button>
+        <button class="trail-variant-btn" data-variant="2">Variant 2</button>
+        <button class="trail-variant-btn" data-variant="3">Variant 3</button>
+        <button class="trail-variant-btn" data-variant="4">Variant 4</button>
+        <button class="trail-variant-btn" data-variant="5">Variant 5</button>
+        <button class="trail-variant-btn" data-variant="6">Variant 6</button>
+        <button class="trail-variant-btn" data-variant="7">Variant 7</button>
+        <button class="trail-variant-btn" data-variant="8">Variant 8</button>
+      </div>
+
+      <!-- Image Trail Interactive Area -->
+      <div class="clients-imagetrail-wrapper reveal" id="clientsTrailWrapper">
+        <div class="clients-imagetrail-hint" id="trailHint">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="M13 13l6 6"/></svg>
+          Move cursor inside this area
+          <span>To reveal client logos</span>
+        </div>
+        <div class="content" id="imageTrailContent"></div>
       </div>
     </div>
   </section>
@@ -355,5 +314,96 @@
   <script src="script.js"></script>
   <script src="animations.js"></script>
   <script src="inner.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const clientImages = [
+        "images/client/1701422245_1635483488_biki.png",
+        "images/client/1701422343_1594376391_indexpell.png",
+        "images/client/1701422773_1642661806_1635482840_actilife.png",
+        "images/client/1715689843_1588249167_newsofgujarat.jpg",
+        "images/client/1715689885_1588069727_joyous.png",
+        "images/client/1715692186_1587194808_pod_logo.png",
+        "images/client/1715692300_1588069564_the-phone.png",
+        "images/client/1715692402_1588069580_solitaire.png",
+        "images/client/1715692438_1588069594_iid.png",
+        "images/client/1715692512_1588249329_ferrum.jpg",
+        "images/client/1715692558_1588069629_kartzone.png",
+        "images/trust_by/1723627523_logo-06.jpg",
+        "images/trust_by/1723627537_logo-07.jpg",
+        "images/trust_by/1723627551_logo-08.jpg",
+        "images/trust_by/1723627565_logo-09.jpg",
+        "images/trust_by/1723627580_logo-10.jpg",
+        "images/trust_by/1723627603_logo-11.jpg",
+        "images/trust_by/1723627627_logo-12.jpg",
+        "images/trust_by/1723627643_logo-13.jpg",
+        "images/trust_by/1723627656_logo-14.jpg",
+        "images/trust_by/1733725545_ViralKar_Logo.jpg",
+        "images/portfolio/1577091792_logo41.jpg",
+        "images/portfolio/1577091808_logo40.jpg",
+        "images/portfolio/1577091828_logo51.jpg",
+        "images/portfolio/1577091847_logo49.jpg",
+        "images/portfolio/1577103529_logo48.jpg",
+        "images/portfolio/1577103556_logo47.jpg",
+        "images/portfolio/1577103610_logo46.jpg",
+        "images/portfolio/1577103644_logo57.jpg",
+        "images/portfolio/1577103695_logo56.jpg",
+        "images/portfolio/1577103984_logo55.jpg",
+        "images/portfolio/1577104007_logo54.jpg",
+        "images/portfolio/1577104024_logo53.jpg",
+        "images/portfolio/1577104044_logo52.jpg",
+        "images/portfolio/1577104087_logo60.jpg",
+        "images/portfolio/1577104148_logo59.jpg",
+        "images/portfolio/1577104170_logo58.jpg",
+        "images/portfolio/1577104240_logo45.jpg",
+        "images/portfolio/1577104611_logo44.jpg",
+        "images/portfolio/1580452563_logo15.jpg",
+        "images/portfolio/1580452608_logo16.jpg",
+        "images/portfolio/1580452652_logo18.jpg",
+        "images/portfolio/1580452794_logo17.jpg",
+        "images/portfolio/1580452813_logo19.jpg",
+        "images/portfolio/1580452834_logo20.jpg",
+        "images/portfolio/1580452852_logo21.jpg",
+        "images/portfolio/1580452899_logo22.jpg",
+        "images/portfolio/1580452916_logo23.jpg",
+        "images/portfolio/1580452943_logo24.jpg",
+        "images/portfolio/1580452973_logo25.jpg",
+        "images/portfolio/1580452995_logo26.jpg",
+        "images/portfolio/1580453021_logo27.jpg",
+        "images/portfolio/1580453041_logo28.jpg",
+        "images/portfolio/1580453068_logo29.jpg",
+        "images/portfolio/1580453089_logo35.jpg",
+        "images/portfolio/1580453112_logo36.jpg",
+        "images/portfolio/1580453132_logo37.jpg",
+        "images/portfolio/1580453316_logo38.jpg",
+        "images/portfolio/1580453333_logo39.jpg",
+        "images/portfolio/1733724681_1597733346_sbi.png",
+        "images/portfolio/1771829812_logovrri.png"
+      ];
+
+      const container = document.getElementById('imageTrailContent');
+      const wrapper = document.getElementById('clientsTrailWrapper');
+      const hint = document.getElementById('trailHint');
+
+      if (container && window.initImageTrail) {
+        const trail = window.initImageTrail(container, clientImages, 1);
+
+        if (wrapper) {
+          wrapper.addEventListener('mousemove', () => {
+            if (hint) hint.style.opacity = '0';
+          }, { once: true });
+        }
+
+        const btns = document.querySelectorAll('.trail-variant-btn');
+        btns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const variant = parseInt(btn.getAttribute('data-variant'), 10);
+            if (trail) trail.setVariant(variant);
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>
