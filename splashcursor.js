@@ -51,8 +51,8 @@
       PAUSED: false,
       BACK_COLOR: { r: 0, g: 0, b: 0 },
       TRANSPARENT: true,
-      RAINBOW_MODE: false, // Light blue theme color mode
-      COLOR: '#00f2fe' // Theme Light Blue / Cyan color
+      RAINBOW_MODE: false, // Theme color mode
+      COLOR: '#1a7fff' // Theme Blue (#accent2 from style.css)
     };
 
     let pointers = [new pointerPrototype()];
@@ -878,8 +878,8 @@
       const r = parseInt(val.slice(0, 2), 16) / 255;
       const g = parseInt(val.slice(2, 4), 16) / 255;
       const b = parseInt(val.slice(4, 6), 16) / 255;
-      // Vibrant light blue theme multiplier
-      return { r: r * 0.35, g: g * 0.35, b: b * 0.35 };
+      // Theme blue multiplier for vibrant fluid effect
+      return { r: r * 0.4, g: g * 0.4, b: b * 0.4 };
     }
 
     function generateColor() {

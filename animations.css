@@ -336,18 +336,3 @@
 /* ============================================================
    NEW ANIMATIONS — Ocean/Tech Theme Extensions
    ============================================================ */
-
-/* 1. CURSOR BUBBLE TRAIL */
-.cursor-bubble {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%) scale(1);
-  animation: bubbleFloat 1.2s ease-out forwards;
-}
-@keyframes bubbleFloat {
-  0%   { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
-  60%  { opacity: 0.4; }
-  100% { opacity: 0; transform: translate(-50%, calc(-50% - 60px)) scale(0.2); }
-}

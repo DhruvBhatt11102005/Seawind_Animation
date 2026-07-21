@@ -187,34 +187,3 @@
 
 // ── NEW ANIMATIONS ──────────────────────────────────────────
 
-(function() {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  // 1. CURSOR BUBBLE TRAIL
-  let lastBubbleTime = 0;
-  const bubbleColors = [
-    "rgba(0,200,255,0.5)",
-    "rgba(26,127,255,0.5)",
-    "rgba(0,85,204,0.4)",
-    "rgba(0,200,255,0.3)"
-  ];
-  document.addEventListener("mousemove", e => {
-    const now = Date.now();
-    if (now - lastBubbleTime < 80) return;
-    lastBubbleTime = now;
-    const size = Math.random() * 10 + 5;
-    const bubble = document.createElement("div");
-    bubble.className = "cursor-bubble";
-    bubble.style.cssText = `
-      left: ${e.clientX}px;
-      top: ${e.clientY}px;
-      width: ${size}px;
-      height: ${size}px;
-      background: ${bubbleColors[Math.floor(Math.random() * bubbleColors.length)]};
-      border: 1px solid rgba(0,200,255,0.3);
-    `;
-    document.body.appendChild(bubble);
-    setTimeout(() => bubble.remove(), 1200);
-  });
-
-})();
