@@ -89,17 +89,7 @@
         <h2>Our <span class="gradient-text">Clients</span></h2>
         <p>Over 3,500+ businesses across industries have partnered with Seawind Solution.</p>
       </div>
-      <!-- Interactive Variant Control Buttons -->
-      <div class="trail-controls-bar reveal">
-        <button class="trail-variant-btn active" data-variant="1">Variant 1</button>
-        <button class="trail-variant-btn" data-variant="2">Variant 2</button>
-        <button class="trail-variant-btn" data-variant="3">Variant 3</button>
-        <button class="trail-variant-btn" data-variant="4">Variant 4</button>
-        <button class="trail-variant-btn" data-variant="5">Variant 5</button>
-        <button class="trail-variant-btn" data-variant="6">Variant 6</button>
-        <button class="trail-variant-btn" data-variant="7">Variant 7</button>
-        <button class="trail-variant-btn" data-variant="8">Variant 8</button>
-      </div>
+
 
       <!-- Image Trail Interactive Area -->
       <div class="clients-imagetrail-wrapper reveal" id="clientsTrailWrapper">
@@ -385,23 +375,13 @@
       const hint = document.getElementById('trailHint');
 
       if (container && window.initImageTrail) {
-        const trail = window.initImageTrail(container, clientImages, 1);
+        window.initImageTrail(container, clientImages, 1);
 
         if (wrapper) {
           wrapper.addEventListener('mousemove', () => {
             if (hint) hint.style.opacity = '0';
           }, { once: true });
         }
-
-        const btns = document.querySelectorAll('.trail-variant-btn');
-        btns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            btns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const variant = parseInt(btn.getAttribute('data-variant'), 10);
-            if (trail) trail.setVariant(variant);
-          });
-        });
       }
     });
   </script>

@@ -1021,52 +1021,16 @@
 @media (max-width: 480px)  { .clients-logo-grid { grid-template-columns: repeat(3, 1fr); } }
 
 /* ── IMAGE TRAIL CLIENTS COMPONENT ── */
-.trail-controls-bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 25px;
-  margin-bottom: 15px;
-}
-
-.trail-variant-btn {
-  background: var(--surface, rgba(15, 23, 42, 0.7));
-  color: var(--text-muted, #94a3b8);
-  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.trail-variant-btn:hover {
-  color: #ffffff;
-  border-color: var(--primary, #00f2fe);
-  transform: translateY(-2px);
-}
-
-.trail-variant-btn.active {
-  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-  color: #0b1120;
-  border-color: transparent;
-  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
-}
-
 .clients-imagetrail-wrapper {
   position: relative;
   width: 100%;
-  height: 520px;
-  border-radius: 20px;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
+  height: 480px;
+  border-radius: var(--radius-lg, 20px);
+  background: var(--surface2, #f8fafc);
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
   overflow: hidden;
-  margin-top: 15px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  margin-top: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1078,27 +1042,31 @@
   pointer-events: none;
   z-index: 2;
   text-align: center;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 1.1rem;
+  color: var(--text, #1e293b);
+  font-size: 1rem;
   font-weight: 500;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  background: rgba(10, 15, 30, 0.75);
-  padding: 18px 36px;
+  background: var(--surface, #ffffff);
+  padding: 16px 32px;
   border-radius: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   transition: opacity 0.5s ease;
 }
 
+.clients-imagetrail-hint svg {
+  stroke: var(--primary, #0055cc);
+}
+
 .clients-imagetrail-hint span {
-  font-size: 0.85rem;
-  color: #00f2fe;
+  font-size: 0.8rem;
+  color: var(--primary, #0055cc);
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .content {
@@ -1112,19 +1080,19 @@
 }
 
 .content__img {
-  width: 200px;
-  height: 130px;
-  border-radius: 14px;
+  width: 180px;
+  height: 110px;
+  border-radius: 12px;
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
   overflow: hidden;
   will-change: transform, filter;
-  background: #ffffff;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 254, 0.25);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  padding: 12px;
+  background: var(--surface, #ffffff);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  padding: 10px;
   pointer-events: none;
 }
 
