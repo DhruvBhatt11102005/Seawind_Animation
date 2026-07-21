@@ -52,7 +52,7 @@
       BACK_COLOR: { r: 0, g: 0, b: 0 },
       TRANSPARENT: true,
       RAINBOW_MODE: false, // Theme color mode
-      COLOR: '#1a7fff' // Theme Blue (#accent2 from style.css)
+      COLOR: '#4facfe' // Lighter theme blue
     };
 
     let pointers = [new pointerPrototype()];
