@@ -110,7 +110,7 @@
     });
   }
 
-  document.querySelectorAll(".section-header h2").forEach(h2 => {
+  document.querySelectorAll(".section-header h2, .why-left h2").forEach(h2 => {
     if (h2.querySelector(".split-char")) return;
     h2.classList.add("split-heading");
     splitTextElement(h2);
