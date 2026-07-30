@@ -200,22 +200,20 @@
 // ── NEW ANIMATIONS ──────────────────────────────────────────
 
 (function () {
-  // Reveal the plans grid with stagger and animate corporate prices
-  const plansSection = document.getElementById('plans');
+  // Reveal the plans grid when the featured corporate card reaches view
   const plansGrid = document.querySelector('.plans-grid');
-  if (plansSection && plansGrid) {
+  const featuredCard = document.querySelector('.plan-card.featured');
+  if (plansGrid && featuredCard) {
     const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        // require element to be almost fully visible before running animations
-        if (entry.intersectionRatio < 0.99) return;
+        if (entry.intersectionRatio < 0.75) return;
         plansGrid.classList.add('visible');
-        // reveal corporate tiers rows
         const corp = plansGrid.querySelector('.corporate-tiers');
         if (corp) corp.classList.add('visible');
         obs.unobserve(entry.target);
       });
-    }, { threshold: 0.99 });
-    obs.observe(plansSection);
+    }, { threshold: 0.75 });
+    obs.observe(featuredCard);
   }
 
   // Count-up for price numbers
@@ -223,8 +221,7 @@
   if (priceEls.length) {
     const priceObs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        // wait until the number element is fully visible
-        if (entry.intersectionRatio < 0.99) return;
+        if (entry.intersectionRatio < 0.5) return;
         const el = entry.target;
         if (el.dataset.animated) { priceObs.unobserve(el); return; }
         const target = parseInt(el.dataset.price, 10);
@@ -242,7 +239,7 @@
         requestAnimationFrame(step);
         priceObs.unobserve(el);
       });
-    }, { threshold: 0.99 });
+    }, { threshold: 0.5 });
     priceEls.forEach(e => priceObs.observe(e));
   }
 
