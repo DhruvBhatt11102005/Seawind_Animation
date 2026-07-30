@@ -134,6 +134,35 @@
 
   document.querySelectorAll(".section-header").forEach(h => animObs.observe(h));
 
+  const pricingSection = document.getElementById('pricing');
+  if (pricingSection) {
+    const cards = pricingSection.querySelectorAll('.pricing-card');
+    const lists = pricingSection.querySelectorAll('.pricing-card ul li');
+    const checks = pricingSection.querySelectorAll('.pricing-check');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        cards.forEach((card, index) => {
+          card.style.transition = `opacity 0.65s ease, transform 0.65s ease`;
+          card.style.transitionDelay = `${index * 0.12}s`;
+          card.classList.add('visible');
+          const cardChecks = card.querySelectorAll('ul li');
+          cardChecks.forEach((li, liIndex) => {
+            const check = li.querySelector('.pricing-check');
+            if (check) {
+              const delay = 0.35 + liIndex * 0.08;
+              li.style.transition = `opacity 0.45s ease, transform 0.45s ease ${delay}s`;
+              li.classList.add('visible');
+              check.classList.add('visible');
+            }
+          });
+        });
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.25 });
+    obs.observe(pricingSection);
+  }
+
   const resellerSection = document.getElementById('reseller');
   if (resellerSection) {
     const items = resellerSection.querySelectorAll('.stagger-item');
