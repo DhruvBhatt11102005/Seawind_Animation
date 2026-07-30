@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Seawind — Premium 3D Hero Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ---- Copied design tokens from the live Seawind site's style.css,
+     so this preview matches the real theme exactly ---- */
+  :root {
+    --bg: rgba(248, 250, 252, 0.9);
+    --bg2: rgba(241, 245, 249, 0.95);
+    --surface: #ffffff;
+    --surface2: #f8fafc;
+    --border: rgba(0,85,204,0.15);
+    --accent: #0055cc;
+    --accent2: #1a7fff;
+    --accent3: #00c8ff;
+    --gold: #f0a500;
+    --text: #0f172a;
+    --muted: #475569;
+    --white: #ffffff;
+    --grad: linear-gradient(135deg,#0055cc,#1a7fff);
+    --grad2: linear-gradient(135deg,#1a7fff,#00c8ff);
+    --grad3: linear-gradient(135deg,#0055cc,#00c8ff);
+    --radius: 16px;
+    --radius-lg: 24px;
+    --shadow: 0 8px 40px rgba(0,85,204,0.1);
+    --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  html { scroll-behavior: smooth; background: #f8fafc; }
+  body { margin:0; font-family: Inter, sans-serif; background: transparent; color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+  .mesh-bg {
+    position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(0, 85, 204, 0.18), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 90% 20%, rgba(0, 200, 255, 0.1), transparent 50%),
+      radial-gradient(ellipse 50% 30% at 50% 100%, rgba(26, 127, 255, 0.08), transparent 45%);
+  }
+
+  /* Minimal nav replica, just for preview context */
+  .pv-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 32px; background: rgba(255,255,255,0.7); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .pv-logo { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
+  .pv-links { display: flex; gap: 28px; font-size: 0.9rem; font-weight: 500; color: var(--muted); }
+  .pv-links a { color: inherit; text-decoration: none; }
+  @media (max-width: 768px) { .pv-links { display:none; } }
+
+  /* Buttons — copied from style.css so CTAs render correctly in this isolated preview */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--grad); color: #fff; font-weight: 600; font-size: 0.95rem;
+    padding: 14px 28px; border-radius: 100px; border: none; cursor: pointer;
+    position: relative; transition: var(--transition);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0, 85, 204, 0.5); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px; background: transparent;
+    color: var(--text); font-weight: 500; font-size: 0.95rem; padding: 14px 28px;
+    border-radius: 100px; border: 1px solid var(--border); cursor: pointer; transition: var(--transition);
+  }
+  .btn-ghost:hover { border-color: var(--accent2); color: var(--accent2); transform: translateY(-2px); }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 800;
+    letter-spacing: 0.06em; color: var(--accent); background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--border); padding: 8px 18px; border-radius: 100px; box-shadow: var(--shadow);
+  }
+
+  /* ---- Next section placeholder, to see the hero scroll-exit transition ---- */
+  .pv-next {
+    position: relative; min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center; padding: 40px 24px;
+  }
+  .pv-next h2 { font-family: "Space Grotesk", sans-serif; font-size: clamp(2rem,4vw,3rem); font-weight: 700; margin-bottom: 12px; }
+  .pv-next p { color: var(--muted); max-width: 520px; }
+</style>
+<link rel="stylesheet" href="hero-3d.css" />
+</head>
+<body>
+
+<div class="mesh-bg" aria-hidden="true"></div>
+
+<nav class="pv-nav">
+  <div class="pv-logo">Seawind</div>
+  <div class="pv-links">
+    <a href="#">Services</a><a href="#">Portfolio</a><a href="#">Tech</a><a href="#">About</a><a href="#">Contact</a>
+  </div>
+  <button class="btn-primary" style="padding:10px 20px;font-size:0.85rem;">Get Started</button>
+</nav>
+
+<!-- Hero markup (same content as hero-3d-section.html) -->
+<section class="hero3d" id="hero3d">
+  <canvas class="hero3d-canvas" id="hero3dCanvas" aria-hidden="true"></canvas>
+  <div class="hero3d-grid-overlay" aria-hidden="true"></div>
+
+  <div class="hero3d-inner">
+    <div class="hero3d-content">
+      <span class="hero-badge hero3d-badge">✦ Ahmedabad's #1 Digital Agency</span>
+
+      <h1 class="hero3d-title">
+        <span class="hero3d-line"><span class="word">Now</span> <span class="word">is</span> <span class="word">the</span> <span class="word">Time</span></span>
+        <span class="hero3d-line hero3d-line-grad"><span class="word">for</span> <span class="word">your</span> <span class="word">Dream</span> <span class="word">Website</span></span>
+      </h1>
+
+      <p class="hero3d-sub">Where bold design meets seamless functionality — now with immersive, scroll-driven 3D depth.</p>
+
+      <div class="hero-cta hero3d-cta">
+        <button class="btn-primary">LET'S TALK →</button>
+        <button class="btn-ghost">PLAN WITH AI ✦</button>
+      </div>
+
+      <div class="hero3d-trust">
+        <span class="hero3d-trust-dot" aria-hidden="true"></span>
+        <span>Trusted by 65+ global brands since 2012</span>
+      </div>
+    </div>
+
+    <div class="hero3d-stage">
+      <div class="hero3d-card hero3d-card-main">
+        <div class="hero3d-card-glow" aria-hidden="true"></div>
+        <div class="hero3d-browser-dots"><span></span><span></span><span></span></div>
+        <div class="hero3d-line-mock"></div>
+        <div class="hero3d-line-mock short"></div>
+        <div class="hero3d-chart" aria-hidden="true">
+          <span style="height:38%"></span>
+          <span style="height:62%"></span>
+          <span style="height:48%"></span>
+          <span style="height:80%"></span>
+          <span style="height:66%"></span>
+          <span style="height:94%"></span>
+        </div>
+        <div class="hero3d-line-mock short"></div>
+      </div>
+
+      <div class="hero3d-card hero3d-card-float-1">
+        <div class="hero3d-stat-num">98%</div>
+        <div class="hero3d-stat-label">Client Satisfaction</div>
+      </div>
+
+      <div class="hero3d-card hero3d-card-float-2">
+        <div class="hero3d-stat-num">13+</div>
+        <div class="hero3d-stat-label">Years of Excellence</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero3d-scrollcue">
+    <span>Scroll to explore</span>
+    <div class="hero3d-mouse"><div class="hero3d-wheel"></div></div>
+  </div>
+</section>
+
+<section class="pv-next">
+  <h2>Services Built for Scale</h2>
+  <p>This placeholder shows the hero smoothly diving away in 3D as you scroll past it — swap it for the real "Services" section when you integrate this into index.html.</p>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="hero-3d.js"></script>
+</body>
+</html>

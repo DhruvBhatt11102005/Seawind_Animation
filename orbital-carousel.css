@@ -1,0 +1,381 @@
+/* ============================================================
+   Orbital Carousel Component
+   Theme: Navy / Cyan gradient — matches Seawind design system
+   ============================================================ */
+
+.ai-workflow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0 40px;
+}
+
+.ai-workflow .container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Spacing between heading and carousel cards */
+.ai-workflow .section-header {
+  margin-bottom: 60px !important;
+}
+
+.workflow-canvas {
+  width: 100%;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orbital-carousel {
+  --oc-card-width: 280px;
+  --oc-card-height: 330px;
+  --oc-radius: 380px;
+  --oc-arc-span: 120deg;
+  --oc-tilt-max: 20deg;
+  --oc-perspective: 1400px;
+  --oc-transition: 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  --oc-drag-cursor: grabbing;
+
+  position: relative;
+  width: 100%;
+  height: 560px;
+  min-height: 520px;
+  perspective: var(--oc-perspective);
+  user-select: none;
+  touch-action: pan-y;
+  margin: 0 auto;
+  max-width: 1400px;
+}
+
+.orbital-carousel__stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  overflow: visible;
+}
+
+.orbital-carousel.is-dragging .orbital-carousel__stage {
+  cursor: var(--oc-drag-cursor);
+}
+
+.orbital-carousel__cards {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.orbital-card {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  width: var(--oc-card-width);
+  height: var(--oc-card-height);
+  margin-top: calc(var(--oc-card-height) / -2);
+  margin-left: calc(var(--oc-card-width) / -2);
+  border-radius: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  padding: 68px 22px 24px;
+  transform-origin: center center;
+  will-change: transform, opacity, filter;
+  pointer-events: auto;
+  box-shadow:
+    0 12px 40px rgba(0, 85, 204, 0.08),
+    0 2px 8px rgba(0, 85, 204, 0.04);
+  overflow: hidden;
+  transition:
+    transform var(--oc-transition),
+    opacity var(--oc-transition),
+    filter var(--oc-transition),
+    box-shadow var(--oc-transition),
+    border-color var(--oc-transition);
+}
+
+.orbital-carousel.is-dragging .orbital-card {
+  transition: none;
+}
+
+.orbital-card::before {
+  content: attr(data-step);
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: rgba(0, 85, 204, 0.08);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.orbital-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -20% -55% -20%;
+  height: 100px;
+  background: radial-gradient(ellipse at center, rgba(0, 200, 255, 0.18), transparent 68%);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.orbital-card.is-active {
+  border-color: rgba(0, 200, 255, 0.45);
+  box-shadow:
+    0 32px 80px rgba(0, 85, 204, 0.22),
+    0 8px 24px rgba(0, 200, 255, 0.12);
+}
+
+.orbital-card.is-active::after {
+  opacity: 1;
+}
+
+.orbital-card__index {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid rgba(0, 200, 255, 0.25);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  box-shadow: 0 8px 22px rgba(0, 85, 204, 0.12);
+  z-index: 2;
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.35s var(--ease-spring);
+}
+
+.orbital-card.is-active .orbital-card__index {
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  color: var(--white);
+  border-color: transparent;
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(0, 85, 204, 0.45);
+}
+
+.orbital-card__content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.orbital-card__title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+
+.orbital-card.is-active .orbital-card__title {
+  background: var(--grad2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.orbital-card__desc {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.orbital-card__click-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.orbital-carousel__orbit-guide {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  width: calc(var(--oc-radius) * 2);
+  height: var(--oc-radius);
+  margin-left: calc(var(--oc-radius) * -1);
+  pointer-events: none;
+  opacity: 0.25;
+  z-index: 0;
+}
+
+.orbital-carousel__orbit-guide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-top: 1px dashed rgba(0, 120, 220, 0.5);
+  border-top-left-radius: 100% 100%;
+  border-top-right-radius: 100% 100%;
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.orbital-carousel__controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  z-index: 10;
+  padding-top: 20px;
+}
+
+.orbital-nav-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.3s var(--ease-spring),
+    border-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 85, 204, 0.08);
+}
+
+.orbital-nav-btn:hover {
+  border-color: var(--accent2);
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 85, 204, 0.18);
+}
+
+.orbital-nav-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.orbital-nav-btn--prev { padding-right: 2px; }
+.orbital-nav-btn--next { padding-left: 2px; }
+
+.orbital-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(0, 85, 204, 0.08);
+}
+
+.orbital-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(0, 85, 204, 0.18);
+  cursor: pointer;
+  transition:
+    width 0.35s var(--ease-spring),
+    background 0.35s ease,
+    opacity 0.35s ease,
+    transform 0.35s var(--ease-spring);
+}
+
+.orbital-dot:hover {
+  background: rgba(0, 85, 204, 0.35);
+}
+
+.orbital-dot.is-active {
+  width: 28px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent3));
+  box-shadow: 0 0 12px rgba(0, 200, 255, 0.5);
+}
+
+.orbital-progress-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--oc-radius) * 2 + 60px);
+  height: calc(var(--oc-radius) * 2 + 60px);
+  margin: calc((var(--oc-radius) * 2 + 60px) / -2) 0 0 calc((var(--oc-radius) * 2 + 60px) / -2);
+  pointer-events: none;
+  opacity: 0.08;
+  z-index: 0;
+}
+
+.orbital-progress-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.orbital-progress-ring circle {
+  fill: none;
+  stroke: url(#oc-progress-gradient);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+@media (max-width: 1100px) {
+  .orbital-carousel {
+    --oc-card-width: 220px;
+    --oc-card-height: 270px;
+    --oc-radius: 290px;
+    --oc-arc-span: 220deg;
+  }
+}
+
+@media (max-width: 768px) {
+  .orbital-carousel {
+    --oc-card-width: 260px;
+    --oc-card-height: 280px;
+    --oc-radius: 320px;
+    --oc-arc-span: 260deg;
+    min-height: 460px;
+  }
+  .orbital-carousel__orbit-guide { display: none; }
+  .orbital-progress-ring { display: none; }
+}
+
+@media (max-width: 480px) {
+  .orbital-carousel {
+    --oc-card-width: 240px;
+    --oc-card-height: 260px;
+    --oc-radius: 280px;
+    --oc-arc-span: 280deg;
+    min-height: 420px;
+  }
+  .orbital-nav-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,123 @@
+/* ── Round Carousel — Tech Section ── */
+
+/* Clip overflow only within the tech section so the ring
+   doesn't trigger a horizontal scrollbar on the page */
+.tech {
+  overflow: hidden;
+}
+
+.round-carousel-wrap {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+}
+.round-carousel-wrap:active { cursor: grabbing; }
+
+/* Tilt container */
+.rc-tilt {
+  transform-style: preserve-3d;
+  transform: rotateX(-8deg);
+}
+
+/* Ring */
+.rc-ring {
+  position: relative;
+  transform-style: preserve-3d;
+  /* transform set by JS */
+}
+
+/* Each card slot — fills the ring, then 3D transform rotates+pushes it out to ring radius */
+.rc-item {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+/* Card face */
+.rc-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background-size: 68%;
+  background-repeat: no-repeat;
+  background-position: center 38%;
+  background-color: var(--surface, #0d1b2e);
+  border: 1px solid rgba(0, 200, 255, 0.14);
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+  will-change: transform, box-shadow, filter;
+}
+
+/* Hover — scale up + cyan glow */
+.rc-item:hover .rc-face {
+  transform: scale(1.18) translateZ(18px);
+  box-shadow:
+    0 0 0 2px rgba(0, 200, 255, 0.55),
+    0 16px 48px rgba(0, 200, 255, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+  border-color: rgba(0, 200, 255, 0.7);
+  z-index: 10;
+}
+
+/* Glow ring that appears on hover */
+.rc-glow {
+  position: absolute;
+  inset: -4px;
+  border-radius: 24px;
+  background: radial-gradient(ellipse at center, rgba(0,200,255,0.18) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.rc-item:hover .rc-glow { opacity: 1; }
+
+/* Label pill */
+.rc-label {
+  position: relative;
+  z-index: 2;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 3px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.02em;
+  transition: opacity 0.2s ease;
+}
+.rc-item:hover .rc-label {
+  background: rgba(0, 200, 255, 0.25);
+  border: 1px solid rgba(0,200,255,0.4);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .round-carousel-wrap { height: 420px; }
+}
+@media (max-width: 768px) {
+  .round-carousel-wrap { height: 360px; }
+}
+@media (max-width: 480px) {
+  .round-carousel-wrap { height: 300px; }
+}

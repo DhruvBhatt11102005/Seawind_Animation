@@ -13,6 +13,11 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="animations.css" />
   <link rel="stylesheet" href="inner.css" />
+  <link rel="stylesheet" href="orbital-carousel.css" />
+  <link rel="stylesheet" href="round-carousel.css" />
+  <link rel="stylesheet" href="hero/hero-3d.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 
 <body>
@@ -70,91 +75,65 @@
     </div>
   </nav>
 
-  <!-- ── HERO ── -->
-  <section class="hero" id="hero">
-    <div class="hero-bg">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="orb orb-3"></div>
-      <div class="hero-grid" aria-hidden="true"></div>
-      <div class="hero-shapes" aria-hidden="true">
-        <span class="shape shape--1"></span><span class="shape shape--2"></span>
-        <span class="shape shape--3"></span><span class="shape shape--4"></span><span class="shape shape--5"></span>
+  <!-- ── HERO 3D ── -->
+  <section class="hero3d" id="hero3d">
+    <canvas class="hero3d-canvas" id="hero3dCanvas" aria-hidden="true"></canvas>
+    <div class="hero3d-grid-overlay" aria-hidden="true"></div>
+
+    <div class="hero3d-inner">
+      <div class="hero3d-content">
+        <span class="hero-badge hero3d-badge">✦ Ahmedabad's #1 Digital Agency</span>
+
+        <h1 class="hero3d-title">
+          <span class="hero3d-line"><span class="word">Now</span> <span class="word">is</span> <span class="word">the</span> <span class="word">Time</span></span>
+          <span class="hero3d-line hero3d-line-grad"><span class="word">for</span> <span class="word">your</span> <span class="word">Dream</span> <span class="word">Website</span></span>
+        </h1>
+
+        <p class="hero3d-sub">Where bold design meets seamless functionality — now with immersive, scroll-driven 3D depth.</p>
+
+        <div class="hero-cta hero3d-cta">
+          <a href="contact.html" class="btn-primary">LET'S TALK →</a>
+          <a href="#" class="btn-ghost trigger-ai-planner">PLAN WITH AI ✦</a>
+        </div>
+
+        <div class="hero3d-trust">
+          <span class="hero3d-trust-dot" aria-hidden="true"></span>
+          <span>Trusted by 65+ global brands since 2012</span>
+        </div>
       </div>
-      <canvas id="neuralMeshCanvas" class="neural-mesh-canvas" aria-hidden="true"></canvas>
-      <canvas id="particleCanvas"></canvas>
+
+      <div class="hero3d-stage">
+        <div class="hero3d-card hero3d-card-main">
+          <div class="hero3d-card-glow" aria-hidden="true"></div>
+          <div class="hero3d-browser-dots"><span></span><span></span><span></span></div>
+          <div class="hero3d-line-mock"></div>
+          <div class="hero3d-line-mock short"></div>
+          <div class="hero3d-chart" aria-hidden="true">
+            <span style="height:38%"></span>
+            <span style="height:62%"></span>
+            <span style="height:48%"></span>
+            <span style="height:80%"></span>
+            <span style="height:66%"></span>
+            <span style="height:94%"></span>
+          </div>
+          <div class="hero3d-line-mock short"></div>
+        </div>
+
+        <div class="hero3d-card hero3d-card-float-1">
+          <div class="hero3d-stat-num">98%</div>
+          <div class="hero3d-stat-label">Client Satisfaction</div>
+        </div>
+
+        <div class="hero3d-card hero3d-card-float-2">
+          <div class="hero3d-stat-num">13+</div>
+          <div class="hero3d-stat-label">Years of Excellence</div>
+        </div>
+      </div>
     </div>
 
-    <div class="hero-slider-wrap">
-      <div class="hero-slider" id="heroMainSlider">
-        <!-- Slide 1 -->
-        <div class="hero-slide active">
-          <div class="hero-slide-inner">
-            <div class="hero-slide-left hero-slide-content">
-              <span class="hero-badge">✦ Ahmedabad's #1 Digital Agency</span>
-              <h1 class="hero-title">Now is the Time for your <span class="gradient-text gradient-text--animated">Dream
-                  Website</span></h1>
-              <p class="hero-sub">Where bold design meets seamless functionality</p>
-              <div class="hero-cta">
-                <a href="#contact" class="btn-primary">LET'S TALK <span class="btn-arrow">→</span></a>
-                <a href="#" class="btn-outline trigger-ai-planner">PLAN WITH AI ✦</a>
-              </div>
-            </div>
-            <div class="hero-slide-right">
-              <div class="hero-img-frame">
-                <img src="images/services/1749034404_Custom-Web-Development.jpg" alt="Dream Website"
-                  class="hero-float-img" style="border-radius: 16px;" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Slide 2 -->
-        <div class="hero-slide">
-          <div class="hero-slide-inner">
-            <div class="hero-slide-left hero-slide-content">
-              <h1 class="hero-title">Build <span class="gradient-text gradient-text--animated">Trust Online</span> with
-                a <span class="gradient-text">Powerful Web Presence</span></h1>
-              <p class="hero-sub">Grow your business with a stunning, high-performance website tailored to your needs
-              </p>
-              <div class="hero-cta">
-                <a href="#contact" class="btn-primary">LET'S TALK <span class="btn-arrow">→</span></a>
-                <a href="#" class="btn-outline trigger-ai-planner">PLAN WITH AI ✦</a>
-              </div>
-            </div>
-            <div class="hero-slide-right">
-              <div class="hero-img-frame">
-                <img src="images/services/1753869348_seo-company-ahmedabad.jpg" alt="Web Presence"
-                  class="hero-float-img" style="border-radius: 16px;" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Slide 3 -->
-        <div class="hero-slide">
-          <div class="hero-slide-inner">
-            <div class="hero-slide-left hero-slide-content">
-              <h1 class="hero-title">Boost Your Brand with Our <span
-                  class="gradient-text gradient-text--animated">Digital Marketing Services!</span></h1>
-              <p class="hero-sub">ARE YOU READY TO TAKE YOUR ONLINE PRESENCE TO THE NEXT LEVEL?</p>
-              <div class="hero-cta">
-                <a href="#contact" class="btn-primary">LET'S TALK <span class="btn-arrow">→</span></a>
-                <a href="#" class="btn-outline trigger-ai-planner">PLAN WITH AI ✦</a>
-              </div>
-            </div>
-            <div class="hero-slide-right">
-              <div class="hero-img-frame">
-                <img src="images/services/1749633184_Ai-powerd-Digital-Marketing.avif" alt="Digital Marketing"
-                  class="hero-float-img" style="border-radius: 16px;" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="hero-controls">
-        <button class="hero-arrow prev-arrow" id="heroPrev">←</button>
-        <div class="hero-dots" id="heroDots"></div>
-        <button class="hero-arrow next-arrow" id="heroNext">→</button>
-      </div>
+    <div class="hero3d-scrollcue">
+      <span>Scroll to explore</span>
+      <div class="hero3d-mouse"><div class="hero3d-wheel"></div></div>
     </div>
   </section>
 
@@ -216,32 +195,68 @@
         <p>Every project moves through a clear, data-driven build path.</p>
       </div>
       <div class="workflow-canvas reveal" id="workflowCanvas">
-        <div class="workflow-line" aria-hidden="true"><span id="workflowProgress"></span></div>
-        <article class="workflow-step active" data-step="01">
-          <span class="workflow-index">01</span>
-          <h3>Discover</h3>
-          <p>We map goals, users, content, and growth opportunities before design begins.</p>
-        </article>
-        <article class="workflow-step" data-step="02">
-          <span class="workflow-index">02</span>
-          <h3>Strategy</h3>
-          <p>We convert business needs into architecture, UX flows, and conversion priorities.</p>
-        </article>
-        <article class="workflow-step" data-step="03">
-          <span class="workflow-index">03</span>
-          <h3>Design</h3>
-          <p>Interfaces are shaped with modern visuals, responsive layouts, and brand polish.</p>
-        </article>
-        <article class="workflow-step" data-step="04">
-          <span class="workflow-index">04</span>
-          <h3>Build</h3>
-          <p>Our team develops secure, scalable websites, apps, automation, and integrations.</p>
-        </article>
-        <article class="workflow-step" data-step="05">
-          <span class="workflow-index">05</span>
-          <h3>Grow</h3>
-          <p>SEO, analytics, campaigns, and AI insights help the product keep improving.</p>
-        </article>
+        <div class="orbital-carousel" id="orbitalCarousel">
+          <svg class="orbital-progress-ring" viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <linearGradient id="oc-progress-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0055cc" />
+                <stop offset="50%" stop-color="#1a7fff" />
+                <stop offset="100%" stop-color="#00c8ff" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="49.5" stroke-dasharray="310.86" stroke-dashoffset="310.86" />
+          </svg>
+          <div class="orbital-carousel__orbit-guide" aria-hidden="true"></div>
+          <div class="orbital-carousel__stage" id="orbitalStage">
+            <div class="orbital-carousel__cards">
+              <article class="orbital-card" data-step="01">
+                <span class="orbital-card__index">01</span>
+                <div class="orbital-card__content">
+                  <h3 class="orbital-card__title">Discover</h3>
+                  <p class="orbital-card__desc">We map goals, users, content, and growth opportunities before design begins.</p>
+                </div>
+                <div class="orbital-card__click-surface" aria-label="Focus Discover card"></div>
+              </article>
+              <article class="orbital-card" data-step="02">
+                <span class="orbital-card__index">02</span>
+                <div class="orbital-card__content">
+                  <h3 class="orbital-card__title">Strategy</h3>
+                  <p class="orbital-card__desc">We convert business needs into architecture, UX flows, and conversion priorities.</p>
+                </div>
+                <div class="orbital-card__click-surface" aria-label="Focus Strategy card"></div>
+              </article>
+              <article class="orbital-card" data-step="03">
+                <span class="orbital-card__index">03</span>
+                <div class="orbital-card__content">
+                  <h3 class="orbital-card__title">Design</h3>
+                  <p class="orbital-card__desc">Interfaces are shaped with modern visuals, responsive layouts, and brand polish.</p>
+                </div>
+                <div class="orbital-card__click-surface" aria-label="Focus Design card"></div>
+              </article>
+              <article class="orbital-card" data-step="04">
+                <span class="orbital-card__index">04</span>
+                <div class="orbital-card__content">
+                  <h3 class="orbital-card__title">Build</h3>
+                  <p class="orbital-card__desc">Our team develops secure, scalable websites, apps, automation, and integrations.</p>
+                </div>
+                <div class="orbital-card__click-surface" aria-label="Focus Build card"></div>
+              </article>
+              <article class="orbital-card" data-step="05">
+                <span class="orbital-card__index">05</span>
+                <div class="orbital-card__content">
+                  <h3 class="orbital-card__title">Grow</h3>
+                  <p class="orbital-card__desc">SEO, analytics, campaigns, and AI insights help the product keep improving.</p>
+                </div>
+                <div class="orbital-card__click-surface" aria-label="Focus Grow card"></div>
+              </article>
+            </div>
+          </div>
+          <div class="orbital-carousel__controls">
+            <button class="orbital-nav-btn orbital-nav-btn--prev" aria-label="Previous step">‹</button>
+            <div class="orbital-dots" role="tablist" aria-label="Workflow steps"></div>
+            <button class="orbital-nav-btn orbital-nav-btn--next" aria-label="Next step">›</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -686,126 +701,7 @@
         <button class="tab-btn" data-tab="cms">CMS</button>
         <button class="tab-btn" data-tab="devops">Infra & DevOps</button>
       </div>
-      <div class="tech-panels">
-        <div class="tech-panel active" id="tab-ai">
-          <div class="tech-card"><img src="images/technologies/chat-gpt.png" alt="OpenAI"
-              class="tech-logo" /><span>OpenAI</span></div>
-          <div class="tech-card"><img src="images/technologies/Codex.png" alt="Codex"
-              class="tech-logo" /><span>Codex</span></div>
-          <div class="tech-card"><img src="images/technologies/Verterx-ai.png" alt="Vertex AI"
-              class="tech-logo" /><span>Vertex AI</span></div>
-          <div class="tech-card"><img src="images/technologies/cloud-vision.png" alt="Cloud Vision"
-              class="tech-logo" /><span>Cloud Vision</span></div>
-          <div class="tech-card"><img src="images/technologies/openCv.png" alt="OpenCV"
-              class="tech-logo" /><span>OpenCV</span></div>
-          <div class="tech-card"><img src="images/technologies/tensor-flow.png" alt="TensorFlow"
-              class="tech-logo" /><span>TensorFlow</span></div>
-          <div class="tech-card"><img src="images/technologies/IBM-Watson.png" alt="IBM Watson"
-              class="tech-logo" /><span>IBM Watson</span></div>
-          <div class="tech-card"><img src="images/technologies/Cloud-Natural-Language.png" alt="Cloud Natural"
-              class="tech-logo" /><span>Cloud Natural</span></div>
-          <div class="tech-card"><img src="images/technologies/Cognitive-services.png" alt="Cognitive Services"
-              class="tech-logo" /><span>Cognitive Services</span></div>
-          <div class="tech-card"><img src="images/technologies/Bot-Framework.png" alt="Bot Framework"
-              class="tech-logo" /><span>Bot Framework</span></div>
-          <div class="tech-card"><img src="images/technologies/Mistral.png" alt="Mistral"
-              class="tech-logo" /><span>Mistral</span></div>
-          <div class="tech-card"><img src="images/technologies/LLama.png" alt="Meta Llama"
-              class="tech-logo" /><span>Meta Llama</span></div>
-          <div class="tech-card"><img src="images/technologies/Gemini.png" alt="Gemini"
-              class="tech-logo" /><span>Gemini</span></div>
-          <div class="tech-card"><img src="images/technologies/Anthropic.png" alt="Anthropic"
-              class="tech-logo" /><span>Anthropic</span></div>
-        </div>
-        <div class="tech-panel" id="tab-mobile">
-          <div class="tech-card"><img src="images/technologies/ios.png" alt="iOS"
-              class="tech-logo" /><span>iOS</span></div>
-          <div class="tech-card"><img src="images/technologies/android.png" alt="Android"
-              class="tech-logo" /><span>Android</span></div>
-          <div class="tech-card"><img src="images/technologies/flutter-logo.png" alt="Flutter"
-              class="tech-logo" /><span>Flutter</span></div>
-          <div class="tech-card"><img src="images/technologies/react-native.png" alt="React Native"
-              class="tech-logo" /><span>React Native</span></div>
-          <div class="tech-card"><img src="images/technologies/Swift.png" alt="Swift"
-              class="tech-logo" /><span>Swift</span></div>
-          <div class="tech-card"><img src="images/technologies/kotlin.png" alt="Kotlin"
-              class="tech-logo" /><span>Kotlin</span></div>
-          <div class="tech-card"><img src="images/technologies/Titanium.png" alt="Titanium"
-              class="tech-logo" /><span>Titanium</span></div>
-        </div>
-        <div class="tech-panel" id="tab-frontend">
-          <div class="tech-card"><img src="images/technologies/react-Js.png" alt="React"
-              class="tech-logo" /><span>React</span></div>
-          <div class="tech-card"><img src="images/technologies/Vue.js_Logo.png" alt="Vue.js"
-              class="tech-logo" /><span>Vue.js</span></div>
-          <div class="tech-card"><img src="images/technologies/AngularJS.png" alt="Angular"
-              class="tech-logo" /><span>Angular</span></div>
-          <div class="tech-card"><img src="images/technologies/javascript-logo.png" alt="JavaScript"
-              class="tech-logo" /><span>JavaScript</span></div>
-          <div class="tech-card"><img src="images/technologies/typescript.png" alt="TypeScript"
-              class="tech-logo" /><span>TypeScript</span></div>
-          <div class="tech-card"><img src="images/technologies/html.png" alt="HTML5"
-              class="tech-logo" /><span>HTML5</span></div>
-          <div class="tech-card"><img src="images/technologies/css.png" alt="CSS3" class="tech-logo" /><span>CSS3</span>
-          </div>
-        </div>
-        <div class="tech-panel" id="tab-database">
-          <div class="tech-card"><img src="images/technologies/my-sql.png" alt="MySQL"
-              class="tech-logo" /><span>MySQL</span></div>
-          <div class="tech-card"><img src="images/technologies/PostgreSQL.png" alt="PostgreSQL"
-              class="tech-logo" /><span>PostgreSQL</span></div>
-          <div class="tech-card"><img src="images/technologies/mongodb.png" alt="MongoDB"
-              class="tech-logo" /><span>MongoDB</span></div>
-          <div class="tech-card"><img src="images/technologies/Sqlite-square-icon.png" alt="SQLite"
-              class="tech-logo" /><span>SQLite</span></div>
-          <div class="tech-card"><img src="images/technologies/Oracle.png" alt="Oracle"
-              class="tech-logo" /><span>Oracle</span></div>
-          <div class="tech-card"><img src="images/technologies/redis.png" alt="Redis"
-              class="tech-logo" /><span>Redis</span></div>
-        </div>
-        <div class="tech-panel" id="tab-backend">
-          <div class="tech-card"><img src="images/technologies/Node.js_logo.svg.png" alt="Node.js"
-              class="tech-logo" /><span>Node.js</span></div>
-          <div class="tech-card"><img src="images/technologies/php.png" alt="PHP" class="tech-logo" /><span>PHP</span>
-          </div>
-          <div class="tech-card"><img src="images/technologies/Java.png" alt="Java"
-              class="tech-logo" /><span>Java</span></div>
-          <div class="tech-card"><img src="images/technologies/dot-net.png" alt=".NET"
-              class="tech-logo" /><span>.NET</span></div>
-          <div class="tech-card"><img src="images/technologies/Python.png" alt="Python"
-              class="tech-logo" /><span>Python</span></div>
-          <div class="tech-card"><img src="images/technologies/rubyonrails.png" alt="Ruby on Rails"
-              class="tech-logo" /><span>Ruby on Rails</span></div>
-          <div class="tech-card"><img src="images/technologies/WordPress.png" alt="WordPress"
-              class="tech-logo" /><span>WordPress</span></div>
-        </div>
-        <div class="tech-panel" id="tab-cms">
-          <div class="tech-card"><img src="images/technologies/WordPress.png" alt="WordPress"
-              class="tech-logo" /><span>WordPress</span></div>
-          <div class="tech-card"><img src="images/technologies/drupal.png" alt="Drupal"
-              class="tech-logo" /><span>Drupal</span></div>
-          <div class="tech-card"><img src="images/technologies/joomla.png" alt="Joomla"
-              class="tech-logo" /><span>Joomla</span></div>
-          <div class="tech-card"><img src="images/technologies/shopify.png" alt="Shopify"
-              class="tech-logo" /><span>Shopify</span></div>
-          <div class="tech-card"><img src="images/technologies/magento.png" alt="Magento"
-              class="tech-logo" /><span>Magento</span></div>
-        </div>
-        <div class="tech-panel" id="tab-devops">
-          <div class="tech-card"><img src="images/technologies/docker.png" alt="Docker"
-              class="tech-logo" /><span>Docker</span></div>
-          <div class="tech-card"><img src="images/technologies/Kubernetes.png" alt="Kubernetes"
-              class="tech-logo" /><span>Kubernetes</span></div>
-          <div class="tech-card"><img src="images/technologies/aws.png" alt="AWS" class="tech-logo" /><span>AWS</span>
-          </div>
-          <div class="tech-card"><img src="images/technologies/azure_Devops.png" alt="Azure"
-              class="tech-logo" /><span>Azure</span></div>
-          <div class="tech-card"><img src="images/technologies/Terraform.png" alt="Terraform"
-              class="tech-logo" /><span>Terraform</span></div>
-          <div class="tech-card"><img src="images/technologies/jenkins.png" alt="Jenkins"
-              class="tech-logo" /><span>Jenkins</span></div>
-        </div>
-      </div>
+      <div id="roundCarouselWrap" class="round-carousel-wrap reveal"></div>
     </div>
   </section>
 
@@ -873,16 +769,16 @@
   </section>
 
   <!-- ── PRICING PLANS ── -->
-  <section class="plans section" id="plans">
+  <section class="plans section reveal-slide-left" id="plans">
     <div class="container">
-      <div class="section-header reveal">
+      <div class="section-header">
         <span class="section-tag">Pricing</span>
         <h2>Plans for Every <span class="gradient-text">Business</span></h2>
         <p>Choose the plan that fits your growth. *GST Applicable As Per Government Norms.</p>
       </div>
-      <div class="plans-grid reveal">
+      <div class="plans-grid">
         <!-- Individual -->
-        <div class="plan-card tilt-card">
+        <div class="plan-card tilt-card reveal-left">
           <h3>Individual</h3>
           <p class="plan-sub">Perfect for freelancers, consultants & solo professionals.</p>
           <div class="plan-price">₹2,999<span>/mo</span></div>
@@ -901,7 +797,7 @@
         </div>
 
         <!-- Corporate -->
-        <div class="plan-card featured tilt-card glow-border">
+        <div class="plan-card featured tilt-card glow-border reveal-left">
           <div class="plan-badge">MOST POPULAR</div>
           <h3>Corporate</h3>
           <p class="plan-sub">For teams and growing businesses with central control.</p>
@@ -921,7 +817,7 @@
         </div>
 
         <!-- Enterprise -->
-        <div class="plan-card tilt-card">
+        <div class="plan-card tilt-card reveal-left">
           <h3>Enterprise</h3>
           <p class="plan-sub">For large organizations & partners needing white label solutions.</p>
           <div class="plan-price">Custom</div>
@@ -938,7 +834,7 @@
   </section>
 
   <!-- ── RESELLER ── -->
-  <section class="reseller section" id="reseller">
+  <section class="reseller section reveal-slide-right" id="reseller">
     <div class="container">
       <div class="reseller-inner reveal">
         <div class="reseller-content">
@@ -1408,11 +1304,41 @@
 
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="forms-config.js"></script>
   <script src="forms.js"></script>
   <script src="script.js"></script>
   <script src="animations.js"></script>
   <script src="splashcursor.js"></script>
+  <script src="orbital-carousel.js"></script>
+  <script src="round-carousel.js"></script>
+  <script src="hero/hero-3d.js"></script>
+  <script>
+    (function () {
+      const root = document.getElementById('orbitalCarousel');
+      if (!root || typeof OrbitalCarousel === 'undefined') return;
+      const carousel = new OrbitalCarousel(root, {
+        minScale: 0.78,
+        minOpacity: 0.65,
+        snapDuration: 700,
+        snapEasing: 'outSpring',
+        initialIndex: 0,
+        keyboard: true,
+        clickToFocus: true,
+        wheelEnabled: false,
+        pinnedScroll: true,
+        onChange: function (activeIndex, activeCard) {
+          if (window.console) console.log('[Scroll-Driven Carousel] Active step:', activeIndex + 1, activeCard && activeCard.dataset && activeCard.dataset.step);
+        }
+      });
+      window._workflowCarousel = carousel;
+      try {
+        requestAnimationFrame(function () {
+          carousel.goTo(0);
+        });
+      } catch (_) {}
+    })();
+  </script>
 </body>
 
 </html>

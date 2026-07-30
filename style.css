@@ -681,7 +681,7 @@ img { max-width: 100%; display: block; }
 .trust-logos { display: flex; align-items: center; gap: 60px; width: max-content; animation: trustScroll 40s linear infinite; }
 .trust-logos img { height: 45px; width: auto; object-fit: contain; transition: var(--transition); }
 .trust-logos img:hover { transform: scale(1.15); }
-@keyframes trustScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes trustScroll { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
 /* MARQUEE */
 .marquee-wrap {

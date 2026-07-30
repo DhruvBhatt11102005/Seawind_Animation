@@ -5,13 +5,25 @@
   // Cursor ring
   const ring = document.getElementById("cursorRing");
   let rx = 0, ry = 0, rgx = 0, rgy = 0;
-  document.addEventListener("mousemove", e => { rx = e.clientX; ry = e.clientY; });
+  let lastSpeed = 0;
+
+  document.addEventListener("mousemove", e => {
+    rx = e.clientX;
+    ry = e.clientY;
+  });
+
   function moveRing() {
     if (ring) {
-      rgx += (rx - rgx) * 0.18;
-      rgy += (ry - rgy) * 0.18;
+      const dx = rx - rgx;
+      const dy = ry - rgy;
+      rgx += dx * 0.22;
+      rgy += dy * 0.22;
+      lastSpeed = Math.hypot(dx, dy);
+
+      const speedScale = 1 + Math.min(lastSpeed / 180, 0.14);
       ring.style.left = rgx + "px";
       ring.style.top = rgy + "px";
+      ring.style.transform = `translate(-50%, -50%) scale(${speedScale})`;
     }
     requestAnimationFrame(moveRing);
   }

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="animations.css" />
   <link rel="stylesheet" href="inner.css" />
+  <link rel="stylesheet" href="round-carousel.css" />
 </head>
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display:none;"><defs><filter id="gooey"><feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" /><feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" /><feBlend in="SourceGraphic" in2="goo" /></filter></defs></svg>
@@ -50,9 +51,6 @@
     </div>
   </section>
 
-      </div>
-  </section>
-
   <!-- â”€â”€ TECH STACK â”€â”€ -->
   <section class="tech section" id="tech">
     <div class="container">
@@ -70,6 +68,7 @@
         <button class="tab-btn" data-tab="cms">CMS</button>
         <button class="tab-btn" data-tab="devops">Infra & DevOps</button>
       </div>
+      <div id="roundCarouselWrap" class="round-carousel-wrap reveal"></div>
       <div class="tech-panels">
         <div class="tech-panel active" id="tab-ai">
           <div class="tech-card"><img src="images/technologies/chat-gpt.png" alt="OpenAI"
@@ -188,6 +187,10 @@
               class="tech-logo" /><span>Terraform</span></div>
           <div class="tech-card"><img src="images/technologies/jenkins.png" alt="Jenkins"
               class="tech-logo" /><span>Jenkins</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="section tech-extras">
     <div class="container">
@@ -237,6 +240,7 @@
   </footer>
   <script src="forms-config.js"></script>
   <script src="forms.js"></script>
+  <script src="round-carousel.js"></script>
   <script src="script.js"></script>
   <script src="animations.js"></script>
   <script src="inner.js"></script>
