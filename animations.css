@@ -129,6 +129,60 @@
 /* Parallax layers */
 [data-parallax] { will-change: transform; }
 
+/* ------------------ Pricing section animations ------------------ */
+.section-header .heading-underline {
+  display: block;
+  width: 140px;
+  height: 4px;
+  background: var(--accent);
+  margin-top: 10px;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.65s var(--ease-out-expo);
+}
+.section-header.visible .heading-underline {
+  transform: scaleX(1);
+}
+
+.plans-grid > .plan-card {
+  transition: transform 0.6s var(--ease-out-expo), opacity 0.6s var(--ease-out-expo), box-shadow 0.25s ease;
+  opacity: 0;
+}
+.plans-grid > .plan-card[data-entry="left"] { transform: translateX(-48px) translateY(0); }
+.plans-grid > .plan-card[data-entry="right"] { transform: translateX(48px) translateY(0); }
+.plans-grid > .plan-card[data-entry="bottom"] { transform: translateY(36px); }
+.plans-grid.visible > .plan-card { transform: translateX(0) translateY(0); opacity: 1; }
+.plans-grid.visible > .plan-card:nth-child(1) { transition-delay: 0.06s; }
+.plans-grid.visible > .plan-card:nth-child(2) { transition-delay: 0.12s; }
+.plans-grid.visible > .plan-card:nth-child(3) { transition-delay: 0.18s; }
+
+.plan-card:hover { transform: translateY(-8px); box-shadow: 0 18px 40px rgba(5,40,80,0.12); }
+.plan-card.featured:hover { transform: translateY(-8px) scale(1.03); }
+
+.plan-badge.badge-animate {
+  display: inline-block;
+  animation: badgePulse 3s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.03); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.btn-primary .btn-arrow { display: inline-block; transition: transform 0.22s ease; }
+.btn-primary:hover .btn-arrow { transform: translateX(6px); }
+
+.corporate-tiers .tier-row { opacity: 0; transform: translateX(18px); transition: opacity 0.45s var(--ease-out-expo), transform 0.45s var(--ease-out-expo); }
+.corporate-tiers.visible .tier-row { opacity: 1; transform: translateX(0); }
+.corporate-tiers.visible .tier-row:nth-child(1) { transition-delay: 0.04s; }
+.corporate-tiers.visible .tier-row:nth-child(2) { transition-delay: 0.08s; }
+.corporate-tiers.visible .tier-row:nth-child(3) { transition-delay: 0.12s; }
+.corporate-tiers.visible .tier-row:nth-child(4) { transition-delay: 0.16s; }
+
+.price-num { font-variant-numeric: tabular-nums; }
+
+/* end pricing animations */
+
 /* Ripple click */
 .ripple-host { position: relative; overflow: hidden; }
 .ripple {

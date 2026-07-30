@@ -199,3 +199,50 @@
 
 // ── NEW ANIMATIONS ──────────────────────────────────────────
 
+(function () {
+  // Reveal the plans grid with stagger and animate corporate prices
+  const plansSection = document.getElementById('plans');
+  const plansGrid = document.querySelector('.plans-grid');
+  if (plansSection && plansGrid) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        plansGrid.classList.add('visible');
+        // reveal corporate tiers rows
+        const corp = plansGrid.querySelector('.corporate-tiers');
+        if (corp) corp.classList.add('visible');
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    obs.observe(plansSection);
+  }
+
+  // Count-up for price numbers
+  const priceEls = document.querySelectorAll('.price-num');
+  if (priceEls.length) {
+    const priceObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        if (el.dataset.animated) { priceObs.unobserve(el); return; }
+        const target = parseInt(el.dataset.price, 10);
+        if (isNaN(target)) { priceObs.unobserve(el); return; }
+        el.dataset.animated = '1';
+        const duration = 900;
+        const start = performance.now();
+        function step(now) {
+          const t = Math.min((now - start) / duration, 1);
+          const val = Math.floor(t * target);
+          el.textContent = '₹' + val.toLocaleString();
+          if (t < 1) requestAnimationFrame(step);
+          else el.textContent = '₹' + target.toLocaleString();
+        }
+        requestAnimationFrame(step);
+        priceObs.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    priceEls.forEach(e => priceObs.observe(e));
+  }
+
+})();
+
