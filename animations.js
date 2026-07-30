@@ -122,7 +122,7 @@
       entry.target.classList.add("visible");
       animObs.unobserve(entry.target);
     });
-  }, { threshold: 0.04 });
+  }, { threshold: 0.08 });
 
   document.querySelectorAll(".split-heading, .clip-reveal, .blur-in").forEach(el => animObs.observe(el));
 
@@ -133,6 +133,40 @@
   });
 
   document.querySelectorAll(".section-header").forEach(h => animObs.observe(h));
+
+  const resellerSection = document.getElementById('reseller');
+  if (resellerSection) {
+    const items = resellerSection.querySelectorAll('.stagger-item');
+    const checks = resellerSection.querySelectorAll('.reseller-list li');
+    const badges = resellerSection.querySelectorAll('.floating-widget');
+    const resellerObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        items.forEach((item, index) => {
+          item.style.transition = `opacity 0.6s ease, transform 0.6s ease`;
+          item.style.transitionDelay = `${index * 0.14}s`;
+          item.classList.add('visible');
+        });
+        checks.forEach((li, index) => {
+          li.style.transition = `opacity 0.5s ease, transform 0.5s ease`;
+          li.style.transitionDelay = `${0.4 + index * 0.08}s`;
+          li.classList.add('visible');
+          const tick = li.querySelector('.check');
+          if (tick) tick.classList.add('draw-visible');
+        });
+        badges.forEach((badge, index) => {
+          badge.style.transition = `opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)`;
+          badge.style.transitionDelay = `${0.5 + index * 0.12}s`;
+          badge.classList.add('visible');
+        });
+        const title = resellerSection.querySelector('.reseller-title');
+        if (title) title.classList.add('visible');
+
+        resellerObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.35 });
+    resellerObs.observe(resellerSection);
+  }
 
   // Parallax on scroll
   const parallaxEls = document.querySelectorAll("[data-parallax], .hero-img-frame, .award-card");
