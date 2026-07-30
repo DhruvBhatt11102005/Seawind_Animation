@@ -206,14 +206,15 @@
   if (plansSection && plansGrid) {
     const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
+        // require element to be almost fully visible before running animations
+        if (entry.intersectionRatio < 0.99) return;
         plansGrid.classList.add('visible');
         // reveal corporate tiers rows
         const corp = plansGrid.querySelector('.corporate-tiers');
         if (corp) corp.classList.add('visible');
         obs.unobserve(entry.target);
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.99 });
     obs.observe(plansSection);
   }
 
@@ -222,7 +223,8 @@
   if (priceEls.length) {
     const priceObs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
+        // wait until the number element is fully visible
+        if (entry.intersectionRatio < 0.99) return;
         const el = entry.target;
         if (el.dataset.animated) { priceObs.unobserve(el); return; }
         const target = parseInt(el.dataset.price, 10);
@@ -240,7 +242,7 @@
         requestAnimationFrame(step);
         priceObs.unobserve(el);
       });
-    }, { threshold: 0.6 });
+    }, { threshold: 0.99 });
     priceEls.forEach(e => priceObs.observe(e));
   }
 
