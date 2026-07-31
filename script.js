@@ -89,7 +89,7 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.04, rootMargin: "0px 0px -10px 0px" });
 
-document.querySelectorAll(".reveal, .stagger-children").forEach(el => revealObserver.observe(el));
+document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .stagger-children").forEach(el => revealObserver.observe(el));
 
 // Add stagger to grids
 document.querySelectorAll(".services-gallery, .awards-grid, .plans-grid, .tech-panels").forEach(el => {
@@ -238,9 +238,12 @@ tabBtns.forEach(btn => {
     });
     btn.classList.add("active");
     const panel = document.getElementById("tab-" + btn.dataset.tab);
-    panel.classList.add("active");
+    if (panel) {
+      panel.classList.add("active");
+    }
   });
 });
+
 
 // Spotlight tracking on plan feature items
 document.querySelectorAll(".plan-features li").forEach(li => {

@@ -35,6 +35,8 @@
   /* transform set by JS */
 }
 
+
+
 /* Each card slot — fills the ring, then 3D transform rotates+pushes it out to ring radius */
 .rc-item {
   position: absolute;

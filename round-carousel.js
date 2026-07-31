@@ -125,6 +125,33 @@
     tiltDiv.appendChild(ring);
     wrap.appendChild(tiltDiv);
 
+    /* ── Mouse-reactive 3D Tech Ring ── */
+    let mouseTargetX = 0, mouseTargetY = 0;
+    let currX = 0, currY = 0;
+
+    function onMouseMove(e) {
+      if (!wrap || !wrap.offsetParent) return;
+      const rect = wrap.getBoundingClientRect();
+
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+
+      const distance = 25;
+      const angle = Math.atan2(dy, dx);
+
+      mouseTargetX = Math.cos(angle) * distance;
+      mouseTargetY = Math.sin(angle) * distance;
+
+      if (Math.abs(dx) > 15) {
+        hoverDir = dx > 0 ? 1 : -1;
+      }
+    }
+
+    document.addEventListener("mousemove", onMouseMove);
+
     /* ── Animation ── */
     function apply() {
       ring.style.transform = `translateZ(${-radius}px) rotateY(${rotY}deg)`;
@@ -146,6 +173,13 @@
     function draw(now) {
       const dt = lastT ? Math.min((now - lastT) / 1000, 0.1) : 0;
       lastT = now;
+
+      // Lerp tech ring towards mouse direction
+      currX += (mouseTargetX - currX) * 0.1;
+      currY += (mouseTargetY - currY) * 0.1;
+
+      tiltDiv.style.transform = `rotateX(${-8 + currY * 0.4}deg) rotateY(${currX * 0.4}deg) translate(${currX * 1.2}px, ${currY * 1.2}px)`;
+
       if (!drag.active) {
         if (Math.abs(vel) > 0.01) { rotY += vel * dt; vel *= 0.93; }
         else { rotY += degPerSec * hoverDir * dt; }
@@ -155,9 +189,12 @@
     }
     raf = requestAnimationFrame(draw);
 
-    /* ── Hover direction reversal ── */
-    wrap.addEventListener('mouseenter', () => { hoverDir = -1; });
-    wrap.addEventListener('mouseleave', () => { hoverDir =  1; });
+    /* ── Hover direction reversal & reset ── */
+    wrap.addEventListener('mouseleave', () => {
+      mouseTargetX = 0;
+      mouseTargetY = 0;
+      hoverDir = 1;
+    });
 
     /* ── Drag ── */
     wrap.addEventListener('pointerdown', e => {
@@ -175,7 +212,14 @@
     wrap.addEventListener('pointerup',     stopDrag);
     wrap.addEventListener('pointercancel', stopDrag);
 
-    return { destroy() { cancelAnimationFrame(raf); wrap.innerHTML = ''; } };
+    return {
+      destroy() {
+        cancelAnimationFrame(raf);
+        document.removeEventListener("mousemove", onMouseMove);
+        wrap.innerHTML = '';
+      }
+    };
+
   }
 
   /* ── Init ── */

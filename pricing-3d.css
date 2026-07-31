@@ -1,0 +1,739 @@
+/* ================================================================
+   pricing-3d.css  —  Ultra-Premium Scroll-Driven 3D Pricing Section
+   Seawind Solution  |  Do not edit manually
+   ================================================================ */
+
+/* ── 1. SECTION SCAFFOLD ───────────────────────────────────────── */
+
+#plans {
+  position: relative;
+  /* 350vh total scroll space; pinning handled by GSAP ScrollTrigger */
+  background: transparent;
+  overflow: visible;
+  z-index: 1;
+}
+
+/* Neutralize the IntersectionObserver reveal system — GSAP manages transforms */
+#plans .reveal-left,
+#plans .reveal-right {
+  /* Do NOT set opacity/transform here: GSAP's inline styles override, 
+     but if the IO adds .visible, it must not fight GSAP.
+     Instead we pre-hide via JS inline style before ST initializes. */
+  transition: none !important;
+}
+/* Neutralize the plans-grid CSS animation system */
+#plans .plans-grid > .plan-card,
+#plans .plans-grid.visible > .plan-card {
+  transition: none !important;
+}
+/* tilt-card: keep 3D context, GSAP handles all movement */
+#plans .tilt-card {
+  transform-style: preserve-3d;
+}
+
+
+
+/* Pinned inner wrapper — JS adds this class when ST fires */
+.p3d-sticky-wrap {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;          /* clips cards during 3D entry animation */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+}
+
+/* Container inside sticky wrap must fit in the viewport */
+.p3d-sticky-wrap > .container {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 1200px;
+  padding: 10px clamp(16px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── 2. THREE.JS CANVAS ────────────────────────────────────────── */
+
+#p3d-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+#p3d-canvas.p3d-visible { opacity: 1; }
+
+/* ── 3. BACKGROUND GRADIENT LAYERS ────────────────────────────── */
+
+.p3d-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 0%,   rgba(0, 85, 204, 0.22), transparent 65%),
+    radial-gradient(ellipse 60% 50% at 10% 80%,  rgba(0, 200, 255, 0.14), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 90% 70%,  rgba(26, 127, 255, 0.12), transparent 50%),
+    radial-gradient(ellipse 80% 80% at 50% 50%,  rgba(248, 250, 252, 0.97), transparent 100%);
+  animation: p3dBgShift 12s ease-in-out infinite alternate;
+}
+
+@keyframes p3dBgShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 50% 100%; }
+}
+
+/* Volumetric fog overlay */
+.p3d-fog {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 120% 50% at 50% 100%, rgba(248,250,252,0.7), transparent 60%);
+  animation: p3dFogPulse 8s ease-in-out infinite;
+}
+@keyframes p3dFogPulse {
+  0%, 100% { opacity: 0.6; transform: scaleX(1); }
+  50%       { opacity: 1;   transform: scaleX(1.05); }
+}
+
+/* ── 4. ENERGY SPHERE ──────────────────────────────────────────── */
+
+.p3d-energy-sphere {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%) scale(0);
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,
+    rgba(26, 127, 255, 0.28),
+    rgba(0, 85, 204, 0.18) 40%,
+    rgba(0, 200, 255, 0.08) 70%,
+    transparent 100%);
+  filter: blur(32px);
+  z-index: 2;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: p3dSpherePulse 6s ease-in-out infinite;
+}
+@keyframes p3dSpherePulse {
+  0%, 100% { filter: blur(32px) brightness(1);   }
+  50%       { filter: blur(40px) brightness(1.15); }
+}
+
+/* ── 5. LIGHT STREAKS ──────────────────────────────────────────── */
+
+.p3d-streak {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.6), transparent);
+  border-radius: 100px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.p3d-streak-1 { top: 20%; left: -20%; width: 60%; animation: p3dStreakFlow1 7s linear infinite; }
+.p3d-streak-2 { top: 45%; right: -20%; width: 50%; animation: p3dStreakFlow2 9s linear infinite 2s; }
+.p3d-streak-3 { top: 70%; left: -10%; width: 70%; animation: p3dStreakFlow1 11s linear infinite 4s; }
+
+@keyframes p3dStreakFlow1 {
+  0%   { transform: translateX(-100%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(250%); opacity: 0; }
+}
+@keyframes p3dStreakFlow2 {
+  0%   { transform: translateX(100%); opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.7; }
+  100% { transform: translateX(-250%); opacity: 0; }
+}
+
+/* ── 6. FLOATING PARTICLES ─────────────────────────────────────── */
+
+.p3d-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+.p3d-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,127,255,0.9), rgba(0,200,255,0.4));
+  will-change: transform, opacity;
+  pointer-events: none;
+  animation: p3dParticleFloat var(--dur, 8s) ease-in-out infinite var(--delay, 0s);
+}
+@keyframes p3dParticleFloat {
+  0%         { transform: translateY(0px) translateX(0px) scale(1); opacity: var(--op, 0.5); }
+  33%        { transform: translateY(-30px) translateX(15px) scale(1.1); }
+  66%        { transform: translateY(-10px) translateX(-10px) scale(0.9); }
+  100%       { transform: translateY(0px) translateX(0px) scale(1); opacity: var(--op, 0.5); }
+}
+
+/* ── 7. CIRCULAR ROTATING RINGS ────────────────────────────────── */
+
+.p3d-rings {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.p3d-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  will-change: transform;
+  animation: p3dRingRotate var(--ring-dur, 20s) linear infinite var(--ring-dir, normal);
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.p3d-ring.p3d-ring-visible { opacity: 1; }
+
+.p3d-ring::after {
+  content: '';
+  position: absolute;
+  top: -1px; left: 20%;
+  width: 14%; height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, rgba(26, 127, 255, 0.8), transparent);
+  box-shadow: 0 0 10px rgba(26, 127, 255, 0.5);
+}
+
+.p3d-ring-1 { width: 600px; height: 600px; border-color: rgba(0,85,204,0.10); --ring-dur: 25s; }
+.p3d-ring-2 { width: 800px; height: 800px; border-color: rgba(0,200,255,0.06); --ring-dur: 35s; --ring-dir: reverse; }
+.p3d-ring-3 { width: 420px; height: 420px; border-color: rgba(26,127,255,0.12); --ring-dur: 18s; transform: rotateX(70deg); }
+
+@keyframes p3dRingRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Ring-3 special: tilted in 3D */
+.p3d-ring-3 { animation: p3dRingRotate3 18s linear infinite; }
+@keyframes p3dRingRotate3 {
+  from { transform: rotateX(70deg) rotateZ(0deg); }
+  to   { transform: rotateX(70deg) rotateZ(360deg); }
+}
+
+/* ── 8. SECTION HEADER OVERRIDES ───────────────────────────────── */
+
+#plans .section-header {
+  position: relative;
+  z-index: 5;
+  will-change: transform, opacity;
+  margin-bottom: 0 !important;
+}
+#plans .section-header h2 {
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem) !important;
+  margin-bottom: 6px !important;
+}
+#plans .section-header p {
+  margin-bottom: 0 !important;
+  font-size: 0.95rem !important;
+}
+
+/* Underline glow enhancement */
+#plans .heading-underline {
+  position: relative;
+  display: block;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, #0055cc, #1a7fff, #00c8ff);
+  border-radius: 100px;
+  margin: 10px auto 0;
+  box-shadow: 0 0 20px rgba(26, 127, 255, 0.6);
+  overflow: visible;
+  will-change: width;
+  transform: none !important;
+  transition: none !important;
+}
+#plans .heading-underline::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00c8ff;
+  box-shadow: 0 0 12px rgba(0, 200, 255, 0.8), 0 0 24px rgba(0, 200, 255, 0.4);
+}
+
+/* ── 9. PLANS GRID 3D OVERRIDES ────────────────────────────────── */
+
+#plans .plans-grid {
+  position: relative;
+  z-index: 5;
+  transform-style: preserve-3d;
+  width: 100%;
+  max-width: 1150px;
+  margin: 0 auto;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+  align-items: stretch;
+}
+
+/* ── 10. GLASSMORPHISM CARD OVERRIDES ──────────────────────────── */
+
+#plans .plan-card {
+  /* Override base styles for 3D treatment - Solid backgrounds & defined borders */
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 85, 204, 0.25) !important;
+  box-shadow:
+    0 15px 35px rgba(0, 85, 204, 0.08),
+    0 1px 0 rgba(255,255,255,1) inset !important;
+  will-change: transform, opacity, box-shadow;
+  transform-style: preserve-3d;
+  transition: none !important; /* GSAP handles transitions */
+  overflow: visible;
+  padding: 24px 24px 20px !important; /* Compact padding to prevent cutting off */
+}
+
+/* Make inner elements tighter to save vertical space & extremely high contrast */
+#plans .plan-card h3 {
+  font-size: 1.3rem !important;
+  margin-bottom: 6px !important;
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+#plans .plan-sub {
+  margin-bottom: 12px !important;
+  font-size: 0.85rem !important;
+  line-height: 1.4 !important;
+  color: #334155 !important; /* Darker subtext */
+  font-weight: 500 !important;
+}
+#plans .plan-price {
+  font-size: 2rem !important;
+  margin-bottom: 12px !important;
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+#plans .plan-features {
+  gap: 8px !important;
+  margin-bottom: 14px !important;
+}
+#plans .plan-features li {
+  font-size: 0.82rem !important;
+  color: #1e293b !important; /* High contrast list text */
+  font-weight: 500 !important;
+}
+#plans .plan-not-included {
+  padding-top: 12px !important;
+  margin-top: auto !important;
+  border-top: 1px solid rgba(0, 85, 204, 0.1) !important;
+}
+#plans .plan-not-included strong {
+  margin-bottom: 4px !important;
+  font-size: 0.75rem !important;
+  color: #e11d48 !important; /* Strong red warning */
+}
+#plans .plan-not-included p {
+  font-size: 0.78rem !important;
+  color: #475569 !important;
+}
+#plans .plan-card .btn-outline,
+#plans .plan-card .btn-primary {
+  margin-bottom: 14px !important;
+  padding: 10px 20px !important;
+  font-size: 0.82rem !important;
+}
+
+/* ── NOTE: Initial transforms are set ONLY via gsap.set() in JS ──
+   DO NOT add transform/opacity here — they cause a flash before GSAP loads */
+
+/* Corporate/Featured card — resting glassmorphism enhancement */
+#plans .plan-card.featured {
+  background: #ffffff !important;
+  border: 2px solid #0055cc !important; /* Solid blue accent border */
+  box-shadow:
+    0 15px 45px rgba(0, 85, 204, 0.15),
+    0 0 30px rgba(0, 85, 204, 0.05),
+    0 1px 0 rgba(255,255,255,1) inset !important;
+}
+
+/* Force corporate-tiers rows to be visible */
+#plans .corporate-tiers {
+  background: rgba(0, 85, 204, 0.06) !important;
+  border: 1px solid rgba(0, 85, 204, 0.15) !important;
+  padding: 10px !important;
+  margin-bottom: 12px !important;
+  gap: 6px !important;
+}
+#plans .corporate-tiers .tier-row {
+  opacity: 1 !important;
+  transform: none !important;
+  font-size: 0.82rem !important;
+}
+#plans .corporate-tiers .tier-row span {
+  color: #334155 !important;
+  font-weight: 500 !important;
+}
+#plans .corporate-tiers .tier-row strong {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+#plans .plan-badge {
+  top: -10px !important;
+  font-size: 0.7rem !important;
+  padding: 4px 14px !important;
+}
+
+/* Shimmer overlay — applied to all cards */
+#plans .plan-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.5) 0%,
+    transparent 50%,
+    rgba(26,127,255,0.05) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Reflection sweep */
+#plans .plan-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.35) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+  transform: skewX(-12deg);
+  transition: none;
+}
+#plans .plan-card.p3d-sweep::after {
+  animation: p3dSweep 0.8s ease forwards;
+}
+@keyframes p3dSweep {
+  from { left: -100%; }
+  to   { left: 150%; }
+}
+
+/* ── 11. HOLOGRAPHIC RING (around Corporate card) ──────────────── */
+
+.p3d-holo-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateX(70deg) rotateZ(0deg);
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 200, 255, 0.5);
+  box-shadow:
+    0 0 20px rgba(0, 200, 255, 0.3),
+    inset 0 0 20px rgba(0, 200, 255, 0.1);
+  pointer-events: none;
+  z-index: 3;
+  animation: p3dHoloSpin 3s linear infinite;
+  opacity: 0;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+.p3d-holo-ring::before {
+  content: '';
+  position: absolute;
+  top: -3px; left: 30%;
+  width: 20%; height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, transparent, #00c8ff, transparent);
+  box-shadow: 0 0 20px #00c8ff, 0 0 40px rgba(0,200,255,0.5);
+}
+.p3d-holo-ring::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 45%;
+  width: 15%; height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, transparent, rgba(26,127,255,0.9), transparent);
+  box-shadow: 0 0 16px rgba(26,127,255,0.7);
+}
+@keyframes p3dHoloSpin {
+  from { transform: translate(-50%,-50%) rotateX(70deg) rotateZ(0deg); }
+  to   { transform: translate(-50%,-50%) rotateX(70deg) rotateZ(360deg); }
+}
+
+/* ── 12. LIGHT BEAMS ───────────────────────────────────────────── */
+
+.p3d-beam {
+  position: absolute;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(180deg, rgba(26,127,255,0.6), transparent);
+  border-radius: 100px;
+  top: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transform-origin: top center;
+  will-change: height, opacity;
+}
+.p3d-beam-1 { left: 30%; animation: p3dBeamPulse 4s ease-in-out infinite 0.5s; }
+.p3d-beam-2 { left: 50%; animation: p3dBeamPulse 5s ease-in-out infinite 1.5s; }
+.p3d-beam-3 { left: 70%; animation: p3dBeamPulse 3.5s ease-in-out infinite 0.8s; }
+@keyframes p3dBeamPulse {
+  0%,100% { opacity: 0; height: 0; }
+  20%      { opacity: 0.6; }
+  50%      { opacity: 0.8; height: 200px; }
+  80%      { opacity: 0.4; }
+}
+
+/* ── 13. CARD ORBIT PARTICLES ──────────────────────────────────── */
+
+.p3d-orbit-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00c8ff, rgba(26,127,255,0.5));
+  box-shadow: 0 0 8px rgba(0,200,255,0.6);
+  pointer-events: none;
+  z-index: 6;
+  will-change: transform;
+  opacity: 0;
+}
+
+/* ── 14. BLUE LIGHT WAVE (Phase 5) ─────────────────────────────── */
+
+.p3d-light-wave {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(26, 127, 255, 0.08) 30%,
+    rgba(0, 200, 255, 0.12) 50%,
+    rgba(26, 127, 255, 0.08) 70%,
+    transparent 100%
+  );
+  z-index: 4;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ── 15. BUTTON ENHANCEMENTS ────────────────────────────────────── */
+
+#plans .btn-primary,
+#plans .btn-outline {
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  transition:
+    transform 0.3s var(--ease-spring, cubic-bezier(0.34,1.56,0.64,1)),
+    box-shadow 0.3s ease,
+    background 0.4s ease !important;
+}
+
+/* Gradient sweep on primary button */
+#plans .btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.25) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: none;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+}
+#plans .btn-primary:hover::before {
+  animation: p3dBtnSweep 0.6s ease forwards;
+}
+@keyframes p3dBtnSweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* Ripple */
+.p3d-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  transform: scale(0);
+  pointer-events: none;
+  z-index: 10;
+  animation: p3dRippleAnim 0.6s ease-out forwards;
+}
+@keyframes p3dRippleAnim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* Plan badge pulse enhancement */
+#plans .plan-badge {
+  box-shadow: 0 0 20px rgba(0,85,204,0.3), 0 0 40px rgba(26,127,255,0.15);
+  animation: p3dBadgePulse 3s ease-in-out infinite;
+}
+@keyframes p3dBadgePulse {
+  0%,100% { box-shadow: 0 0 20px rgba(0,85,204,0.3), 0 0 40px rgba(26,127,255,0.15); }
+  50%      { box-shadow: 0 0 30px rgba(0,85,204,0.5), 0 0 60px rgba(26,127,255,0.25); }
+}
+
+/* ── 16. CARD ACTIVE STATE (Post Phase 5) ──────────────────────── */
+
+#plans .plan-card.p3d-active {
+  cursor: pointer;
+}
+#plans .plan-card.p3d-active:hover {
+  box-shadow:
+    0 20px 60px rgba(0,85,204,0.18),
+    0 0 40px rgba(26,127,255,0.1),
+    0 1px 0 rgba(255,255,255,1) inset !important;
+}
+
+/* ── 17. DEPTH SHADOW CLASSES (Phase 4) ─────────────────────────── */
+
+#plans .plan-card.p3d-depth-front {
+  box-shadow:
+    0 40px 80px rgba(0,85,204,0.25),
+    0 0 0 1px rgba(255,255,255,0.9),
+    0 1px 0 rgba(255,255,255,1) inset !important;
+}
+#plans .plan-card.p3d-depth-mid {
+  box-shadow:
+    0 20px 50px rgba(0,85,204,0.18),
+    0 0 40px rgba(26,127,255,0.12) !important;
+}
+#plans .plan-card.p3d-depth-back {
+  box-shadow:
+    0 8px 24px rgba(0,85,204,0.10) !important;
+  filter: brightness(0.95) saturate(0.9);
+}
+
+/* ── 18. PLAN PRICE NUMBER ANIMATION CLASSES ────────────────────── */
+
+.p3d-price-count {
+  display: inline-block;
+  will-change: contents;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 19. RESPONSIVE ─────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .p3d-sticky-wrap {
+    perspective: 800px;
+  }
+  .p3d-energy-sphere { width: 300px; height: 300px; }
+  .p3d-holo-ring { width: 220px; height: 220px; }
+  .p3d-ring-1 { width: 400px; height: 400px; }
+  .p3d-ring-2 { width: 550px; height: 550px; }
+  .p3d-ring-3 { width: 280px; height: 280px; }
+}
+
+@media (max-width: 600px) {
+  #plans .plan-card:not(.featured) {
+    transform: translateY(40px) !important;
+  }
+  #plans .plan-card.featured {
+    transform: translateY(60px) scale(0.95) !important;
+  }
+  .p3d-holo-ring { display: none; }
+  .p3d-beam { display: none; }
+}
+
+/* ── 20. REDUCED MOTION ─────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  #plans .plan-card:not(.featured),
+  #plans .plan-card.featured,
+  #plans .section-header {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .p3d-ring,
+  .p3d-energy-sphere,
+  .p3d-particle,
+  .p3d-streak,
+  .p3d-beam,
+  .p3d-holo-ring,
+  .p3d-bg-layer {
+    animation: none !important;
+    display: none !important;
+  }
+  #plans .plan-card {
+    transition: box-shadow 0.3s ease !important;
+  }
+  #plans .btn-primary,
+  #plans .btn-outline {
+    transition: transform 0.2s ease, background 0.3s ease !important;
+  }
+}
+
+/* ── 21. MAX-HEIGHT VIEWPORT OPTIMIZATIONS ─────────────────────── */
+@media (max-height: 820px) {
+  #plans .plan-card {
+    padding: 18px 18px 14px !important;
+  }
+  #plans .plan-sub {
+    margin-bottom: 8px !important;
+    font-size: 0.8rem !important;
+  }
+  #plans .plan-price {
+    font-size: 1.7rem !important;
+    margin-bottom: 8px !important;
+  }
+  #plans .plan-features {
+    gap: 6px !important;
+    margin-bottom: 10px !important;
+  }
+  #plans .plan-features li {
+    font-size: 0.78rem !important;
+  }
+  #plans .corporate-tiers {
+    padding: 8px !important;
+    margin-bottom: 8px !important;
+    gap: 4px !important;
+  }
+  #plans .corporate-tiers .tier-row {
+    font-size: 0.78rem !important;
+  }
+  #plans .plan-card .btn-outline,
+  #plans .plan-card .btn-primary {
+    margin-bottom: 8px !important;
+    padding: 8px 16px !important;
+  }
+}
+
