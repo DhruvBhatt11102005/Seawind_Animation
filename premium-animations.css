@@ -1,0 +1,607 @@
+/* ============================================================
+   Seawind Solution — Premium Scroll-Driven Animation Layer
+   Part of the motion upgrade (2025)
+   ============================================================ */
+
+/* ── Custom Cursor ────────────────────────────────────────── */
+.sw-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  pointer-events: none;
+  z-index: 100000;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s var(--ease-out-expo),
+              height 0.25s var(--ease-out-expo),
+              background 0.25s ease,
+              opacity 0.25s ease;
+  will-change: transform;
+  mix-blend-mode: multiply;
+}
+
+.sw-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 85, 204, 0.55);
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.35s var(--ease-out-expo),
+              height 0.35s var(--ease-out-expo),
+              border-color 0.35s ease,
+              background 0.35s ease,
+              opacity 0.25s ease;
+  will-change: transform;
+  backdrop-filter: none;
+}
+
+.sw-cursor-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 100001;
+  transform: translate(-50%, -50%);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Cursor states */
+.sw-cursor-ring.is-link {
+  width: 52px;
+  height: 52px;
+  border-color: rgba(0, 85, 204, 0.8);
+  background: rgba(0, 85, 204, 0.08);
+}
+.sw-cursor-ring.is-button {
+  width: 60px;
+  height: 60px;
+  border-color: transparent;
+  background: rgba(0, 85, 204, 0.15);
+}
+.sw-cursor-dot.is-button { width: 4px; height: 4px; }
+.sw-cursor-ring.is-view {
+  width: 70px;
+  height: 70px;
+  border-color: transparent;
+  background: rgba(0, 85, 204, 0.2);
+}
+.sw-cursor-dot.is-view { width: 4px; height: 4px; }
+.sw-cursor-label.is-visible { opacity: 1; }
+
+/* Hide on touch devices */
+@media (hover: none) {
+  .sw-cursor-dot,
+  .sw-cursor-ring,
+  .sw-cursor-label { display: none !important; }
+}
+
+/* ── Scroll Progress Bar ──────────────────────────────────── */
+/* (Already exists as .scroll-progress in style.css — no override needed) */
+
+/* ── Magnetic Button Wrapper ──────────────────────────────── */
+.sw-magnetic {
+  display: inline-flex;
+  will-change: transform;
+}
+
+/* ── Hero Enhancements ────────────────────────────────────── */
+
+/* Stat count-up cards — pop in */
+.hero3d-card-float-1,
+.hero3d-card-float-2 {
+  will-change: transform, opacity;
+}
+
+/* Hero scroll-out: hero section parallax exit handled via GSAP in JS */
+.hero3d {
+  will-change: opacity;
+}
+
+/* ── Section Entrance Animations ──────────────────────────── */
+
+/* Generic "slide up" for section headers */
+.sw-fade-up {
+  opacity: 0;
+  transform: translateY(48px);
+  will-change: opacity, transform;
+}
+.sw-fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+}
+
+/* Clip-path wipe from bottom */
+.sw-clip-up {
+  clip-path: inset(100% 0 0 0);
+  opacity: 0;
+  will-change: clip-path, opacity;
+}
+.sw-clip-up.in-view {
+  clip-path: inset(0% 0 0 0);
+  opacity: 1;
+  transition: clip-path 0.9s var(--ease-out-expo), opacity 0.7s ease;
+}
+
+/* Clip wipe from left */
+.sw-clip-left {
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+}
+.sw-clip-left.in-view {
+  clip-path: inset(0 0% 0 0);
+  opacity: 1;
+  transition: clip-path 1s var(--ease-out-expo), opacity 0.5s ease;
+}
+
+/* ── Trusted-by Marquee: full color, subtle opacity, color on hover ── */
+.trust-logos img {
+  filter: opacity(0.75);
+  transition: filter 0.4s ease, transform 0.4s var(--ease-out-expo);
+}
+.trust-logos img:hover {
+  filter: opacity(1);
+  transform: scale(1.12);
+}
+
+/* Marquee pause on hover — CSS fallback */
+.trust-logos:hover { animation-play-state: paused; }
+.trust-track:hover .trust-logos { animation-play-state: paused; }
+
+/* ── Services Grid: clip-path image reveal on card ────────── */
+/* Images start visible — reveal is a nice-to-have, not a requirement */
+.service-card .card-image-wrap {
+  overflow: hidden;
+  height: 220px;
+}
+.service-card .card-image-wrap img {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.8s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+  object-fit: cover;
+  object-position: top center;
+}
+.service-card.sw-revealed .card-image-wrap img {
+  clip-path: inset(0 0% 0 0);
+}
+/* Fallback: if JS hasn't run yet, show images */
+.service-card:not(.sw-revealed) .card-image-wrap img {
+  animation: swImgFallback 0.1s 2s forwards;
+}
+@keyframes swImgFallback {
+  to { clip-path: inset(0 0% 0 0); }
+}
+
+/* Service card perspective tilt (3D hover) — done via JS */
+.service-card {
+  transform-style: preserve-3d;
+}
+
+/* ── Why-Us Stats: progress ring draw-in ──────────────────── */
+.sw-stat-ring {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
+}
+.sw-stat-ring svg {
+  width: 56px;
+  height: 56px;
+  transform: rotate(-90deg);
+}
+.sw-stat-ring circle {
+  cx: 28;
+  cy: 28;
+  r: 24;
+  fill: none;
+  stroke-width: 3;
+  stroke: rgba(0, 85, 204, 0.12);
+}
+.sw-stat-ring circle.fill {
+  stroke: url(#stat-gradient);
+  stroke-dasharray: 150.8;
+  stroke-dashoffset: 150.8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.4s var(--ease-out-expo);
+}
+.sw-stat-ring.in-view circle.fill {
+  stroke-dashoffset: 0;
+}
+
+/* ── Awards: alternating slide reveal ─────────────────────── */
+.award-card.sw-slide-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  will-change: opacity, transform;
+}
+.award-card.sw-slide-right {
+  opacity: 0;
+  transform: translateX(60px);
+  will-change: opacity, transform;
+}
+.award-card.sw-slide-left.in-view,
+.award-card.sw-slide-right.in-view {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+
+/* ── Pricing: featured card glow pulse entrance ───────────── */
+@keyframes swFeaturedEntrance {
+  0% { box-shadow: 0 0 0 0 rgba(0, 200, 255, 0), 0 0 0 0 rgba(0, 85, 204, 0); }
+  40% { box-shadow: 0 0 60px 20px rgba(0, 200, 255, 0.15), 0 20px 60px rgba(0, 85, 204, 0.25); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 200, 255, 0), 0 20px 40px rgba(0, 85, 204, 0.12); }
+}
+.plan-card.featured.sw-entrance-done {
+  animation: swFeaturedEntrance 1.2s var(--ease-out-expo) forwards;
+}
+.pricing-card.featured.sw-entrance-done {
+  animation: swFeaturedEntrance 1.2s var(--ease-out-expo) 0.2s forwards;
+}
+
+/* ── Portfolio: horizontal scroll gallery ─────────────────── */
+.sw-portfolio-hscroll {
+  position: relative;
+  overflow: hidden;
+}
+.sw-portfolio-track {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  cursor: grab;
+  user-select: none;
+}
+.sw-portfolio-track:active { cursor: grabbing; }
+.sw-portfolio-track .portfolio-card {
+  flex: 0 0 380px;
+  width: 380px;
+}
+.sw-portfolio-track .portfolio-card .portfolio-card-image img {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.9s var(--ease-out-expo);
+}
+.sw-portfolio-track .portfolio-card.sw-revealed .portfolio-card-image img {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* Progress bar for portfolio scroll */
+.sw-portfolio-progress {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  justify-content: center;
+}
+.sw-portfolio-bar-track {
+  height: 2px;
+  flex: 1;
+  max-width: 200px;
+  background: rgba(0, 85, 204, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.sw-portfolio-bar-fill {
+  height: 100%;
+  width: 33%;
+  background: var(--grad2);
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+.sw-portfolio-arrows {
+  display: flex;
+  gap: 10px;
+}
+.sw-portfolio-arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+.sw-portfolio-arrow:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ── FAQ: smooth accordion ────────────────────────────────── */
+.faq-answer {
+  overflow: hidden;
+}
+/* transition set via JS for precise height */
+
+/* ── CTA Section: big type reveal ─────────────────────────── */
+.sw-cta-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.sw-cta-word-inner {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform 0.8s var(--ease-out-expo);
+}
+.sw-cta-revealed .sw-cta-word-inner {
+  transform: translateY(0);
+}
+
+/* ── Footer: calm fade up ──────────────────────────────────── */
+.footer .footer-brand,
+.footer .footer-col {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+}
+.footer .footer-brand.in-view,
+.footer .footer-col.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Lenis Smooth Scroll ─────────────────────────────────── */
+html.lenis {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* ── Prefers-Reduced-Motion override ─────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .sw-fade-up,
+  .sw-clip-up,
+  .sw-clip-left,
+  .award-card.sw-slide-left,
+  .award-card.sw-slide-right,
+  .sw-cta-word-inner {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  .trust-logos img { filter: opacity(1) !important; }
+  .service-card .card-image-wrap img { clip-path: none !important; }
+  .sw-portfolio-track .portfolio-card .portfolio-card-image img { clip-path: none !important; }
+  .footer .footer-brand,
+  .footer .footer-col {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .sw-cursor-dot,
+  .sw-cursor-ring,
+  .sw-cursor-label { display: none !important; }
+}
+
+/* ── Extra: Hide native cursor on desktop ─────────────────── */
+body.sw-custom-cursor,
+body.sw-custom-cursor * {
+  cursor: none !important;
+}
+body.sw-custom-cursor input,
+body.sw-custom-cursor textarea,
+body.sw-custom-cursor select {
+  cursor: text !important;
+}
+
+/* ── Portfolio horizontal scroll layout fixes ─────────────── */
+.sw-portfolio-hscroll {
+  overflow: visible;
+  position: relative;
+}
+.sw-portfolio-track {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  will-change: transform;
+  padding-bottom: 8px;
+}
+.sw-portfolio-track .portfolio-card {
+  flex: 0 0 360px;
+  width: 360px;
+}
+
+/* ── AI Workflow cards: base state for GSAP ──────────────── */
+.orbital-card {
+  will-change: opacity, transform;
+}
+
+/* ── Workflow progress line ──────────────────────────────── */
+.workflow-line span {
+  will-change: width;
+}
+
+/* ── Section header: sw-fade-up — only hide after JS marks it ready ─── */
+.sw-fade-up {
+  opacity: 0;
+  transform: translateY(48px);
+  will-change: opacity, transform;
+  transition: opacity 0.85s var(--ease-out-expo), transform 0.85s var(--ease-out-expo);
+}
+/* Fallback: if JS doesn't fire within 3s, show anyway */
+.sw-fade-up {
+  animation: swFadeUpFallback 0.01s 3s forwards;
+}
+@keyframes swFadeUpFallback {
+  to { opacity: 1; transform: translateY(0); }
+}
+.sw-fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+  animation: none;
+}
+
+/* ── Why-us: stat card ring decorators ─────────────────────── */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 0%, rgba(0,200,255,0.07), transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Testimonial stars: staggered pop-in ───────────────────── */
+.testimonial-card .stars {
+  display: inline-flex;
+  gap: 2px;
+  letter-spacing: 1px;
+}
+
+/* ── CTA h2 word overflow hidden ───────────────────────────── */
+.sw-cta-h2 {
+  overflow: visible; /* words have their own overflow:hidden */
+  line-height: 1.2;
+}
+.sw-cta-word {
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: 1.25;
+  margin-right: 0.25em;
+}
+
+/* ── Smooth scroll-hint pulse (replace opacity-only with bounce) */
+@keyframes swScrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
+  50% { transform: translateX(-50%) translateY(6px); opacity: 1; }
+}
+.hero3d-scrollcue {
+  animation: swScrollBounce 2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* ── Blog grid reveal base state ──────────────────────────── */
+.blog-grid {
+  overflow: visible;
+}
+
+/* ── Nav: active section highlight (progressive) ───────────── */
+.nav-links a.sw-nav-active {
+  color: var(--accent);
+}
+.nav-links a.sw-nav-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ── Mobile: simplify/disable heavy effects ────────────────── */
+@media (max-width: 768px) {
+  .sw-portfolio-hscroll { overflow: visible; }
+  .sw-portfolio-track { flex-direction: column; width: 100%; }
+  .sw-portfolio-track .portfolio-card { flex: unset; width: 100%; }
+  .sw-portfolio-progress { display: none; }
+  .sw-cursor-dot,
+  .sw-cursor-ring,
+  .sw-cursor-label { display: none !important; }
+  .award-card.sw-slide-left { transform: translateY(30px) !important; }
+  .award-card.sw-slide-right { transform: translateY(30px) !important; }
+}
+
+/* ── Orbital carousel card reveal base ─────────────────────── */
+.orbital-card {
+  opacity: 0;
+  transform: translateY(30px) scale(0.96);
+}
+/* GSAP will set opacity/transform back — but ensure reduced-motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  .orbital-card { opacity: 1 !important; transform: none !important; }
+}
+
+/* ── Button fill-wipe hover (sweep from left) ──────────────── */
+/* Applied to primary and outline buttons via a pseudo-element */
+.btn-primary {
+  --sw-wipe: 0%;
+  background: linear-gradient(
+    to right,
+    var(--accent2) var(--sw-wipe),
+    transparent var(--sw-wipe)
+  ), var(--grad);
+  background-size: 200% 100%;
+  background-position: right center;
+  transition: background-position 0.45s var(--ease-out-expo),
+              transform 0.35s var(--ease-spring),
+              box-shadow 0.35s ease;
+}
+.btn-primary:hover {
+  background-position: left center;
+}
+
+/* Ghost / outline fill wipe */
+.btn-outline {
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+.btn-outline::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s var(--ease-out-expo);
+  z-index: -1;
+}
+.btn-outline:hover::after { transform: scaleX(1); }
+.btn-outline:hover { color: #fff; border-color: var(--accent); }
+
+/* ── Nav: active indicator ──────────────────────────────────── */
+.nav-links a.sw-nav-active:not(.btn-nav) {
+  color: var(--accent);
+}
+
+/* ── Progress bar: glow trail ──────────────────────────────── */
+.scroll-progress {
+  box-shadow: 0 0 12px rgba(0,200,255,0.5), 0 0 30px rgba(0,85,204,0.3);
+}
+
+/* ── Portfolio "View Full Portfolio" button centred ─────────── */
+.portfolio-preview [style*="text-align:center"],
+.portfolio-preview [style*="text-align: center"] {
+  margin-top: 32px;
+}
+
+/* ── Testimonial card: individual star pop ─────────────────── */
+@keyframes swStarPop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.testimonial-card.sw-stars-animated .stars span {
+  display: inline-block;
+  animation: swStarPop 0.4s var(--ease-spring) both;
+}
+.testimonial-card.sw-stars-animated .stars span:nth-child(1) { animation-delay: 0.0s; }
+.testimonial-card.sw-stars-animated .stars span:nth-child(2) { animation-delay: 0.06s; }
+.testimonial-card.sw-stars-animated .stars span:nth-child(3) { animation-delay: 0.12s; }
+.testimonial-card.sw-stars-animated .stars span:nth-child(4) { animation-delay: 0.18s; }
+.testimonial-card.sw-stars-animated .stars span:nth-child(5) { animation-delay: 0.24s; }

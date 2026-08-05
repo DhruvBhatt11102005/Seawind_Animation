@@ -7,15 +7,22 @@
   <title>Seawind Solution — Top Web Design & Development Services in India</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="animations.css" />
   <link rel="stylesheet" href="inner.css" />
   <link rel="stylesheet" href="orbital-carousel.css" />
   <link rel="stylesheet" href="round-carousel.css" />
-  <link rel="stylesheet" href="hero/hero-3d.css" />
+  <link rel="stylesheet" href="premium-animations.css" />
+  <link rel="stylesheet" href="hero-modern.css" />
+  <!-- Seawind unified design system: our fonts, colors, glass cards, animation language -->
+  <link rel="stylesheet" href="seawind-unify.css" />
+  <link rel="stylesheet" href="seawind-hero.css" />
+  <!-- Pin + crossfade transitions — DISABLED (causes scroll glitch with Lenis) -->
+  <!-- <link rel="stylesheet" href="section-pin-transitions.css" /> -->
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
@@ -75,60 +82,63 @@
     </div>
   </nav>
 
-  <!-- ── HERO 3D ── -->
-  <section class="hero3d" id="hero3d">
-    <canvas class="hero3d-canvas" id="hero3dCanvas" aria-hidden="true"></canvas>
-    <div class="hero3d-grid-overlay" aria-hidden="true"></div>
+  <!-- ── HERO MODERN (Seawind water/glass build) ── -->
+  <!-- Global ocean canvas: sits fixed behind the entire page so it shows
+       through during every section transition, not just the hero -->
+  <canvas id="scene"></canvas>
 
-    <div class="hero3d-inner">
-      <div class="hero3d-content">
-        <span class="hero-badge hero3d-badge">✦ Ahmedabad's #1 Digital Agency</span>
+  <div class="hero-wrap" id="heroWrap">
+    <section class="hero-pin" id="hero3d">
 
-        <h1 class="hero3d-title">
-          <span class="hero3d-line"><span class="word">Now</span> <span class="word">is</span> <span class="word">the</span> <span class="word">Time</span></span>
-          <span class="hero3d-line hero3d-line-grad"><span class="word">for</span> <span class="word">your</span> <span class="word">Dream</span> <span class="word">Website</span></span>
-        </h1>
-
-        <p class="hero3d-sub">Where bold design meets seamless functionality — now with immersive, scroll-driven 3D depth.</p>
-
-        <div class="hero-cta hero3d-cta">
-          <a href="contact.html" class="btn-primary">LET'S TALK →</a>
-          <a href="#" class="btn-ghost trigger-ai-planner">PLAN WITH AI ✦</a>
+      <!-- scene 1 : arrival -->
+      <div class="scene" id="scene1">
+        <div class="frame glass">
+          <span class="eyebrow"><span class="dot"></span>Ahmedabad's #1 digital agency</span>
+          <h1>
+            <span class="line"><span>Now is the time</span></span>
+            <span class="line"><span>for your <span class="grad">Dream</span></span></span>
+            <span class="line"><span><span class="grad">Website</span></span></span>
+          </h1>
+          <p class="sub">Where bold design meets seamless functionality — now with immersive, scroll-driven depth.</p>
+          <div class="ctas">
+            <a class="btn-primary" href="contact.html" data-hover>Let's talk →</a>
+            <a class="btn-outline trigger-ai-planner" href="#" data-hover>✦ Plan with AI</a>
+          </div>
+          <div class="stats-row">
+            <div><div class="stat-num" data-count="65">0+</div><div class="stat-label">Global brands since 2012</div></div>
+            <div><div class="stat-num" data-count="98" data-suffix="%">0%</div><div class="stat-label">Client satisfaction</div></div>
+            <div><div class="stat-num" data-count="13">0+</div><div class="stat-label">Years of excellence</div></div>
+          </div>
         </div>
+        <div class="scroll-cue"><span>Scroll to explore</span><span class="stick"></span></div>
+      </div>
 
-        <div class="hero3d-trust">
-          <span class="hero3d-trust-dot" aria-hidden="true"></span>
-          <span>Trusted by 65+ global brands since 2012</span>
+      <!-- scene 2 : the swell -->
+      <div class="scene" id="scene2">
+        <div class="frame glass">
+          <span class="signature-line"></span>
+          <span class="eyebrow"><span class="dot"></span>No two currents alike</span>
+          <h2 class="mid">We read the <span class="grad">swell</span> before it breaks</h2>
+          <p class="sub">Markets shift like weather. We design systems that move with them — not brittle launches, but living products tuned to real conditions.</p>
         </div>
       </div>
 
-      <div class="hero3d-stage">
-        <div class="hero3d-card hero3d-card-main">
-          <div class="hero3d-card-glow" aria-hidden="true"></div>
-          <div class="hero3d-browser-dots"><span></span><span></span><span></span></div>
-          <div class="hero3d-line-mock"></div>
-          <div class="hero3d-line-mock short"></div>
-          <img src="images/logo/hero.png" alt="Seawind Solution" style="width:100%;height:auto;display:block;" />
-          <div class="hero3d-line-mock short"></div>
-        </div>
-
-        <div class="hero3d-card hero3d-card-float-1">
-          <div class="hero3d-stat-num">98%</div>
-          <div class="hero3d-stat-label">Client Satisfaction</div>
-        </div>
-
-        <div class="hero3d-card hero3d-card-float-2">
-          <div class="hero3d-stat-num">13+</div>
-          <div class="hero3d-stat-label">Years of Excellence</div>
+      <!-- scene 3 : calm waters, the ask -->
+      <div class="scene" id="scene3">
+        <div class="frame glass">
+          <span class="signature-line"></span>
+          <span class="eyebrow"><span class="dot"></span>Fair winds ahead</span>
+          <h2 class="mid">Let's chart your <span class="grad">next release</span></h2>
+          <p class="sub">One conversation is usually enough to know if we're the right crew for your build.</p>
+          <div class="ctas">
+            <a class="btn-primary" href="contact.html" data-hover>Start the conversation →</a>
+            <a class="btn-outline" href="portfolio.html" data-hover>See our work</a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="hero3d-scrollcue">
-      <span>Scroll to explore</span>
-      <div class="hero3d-mouse"><div class="hero3d-wheel"></div></div>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <!-- ── TRUSTED BY MARQUEE ── -->
   <div class="trust-marquee">
@@ -1303,8 +1313,9 @@
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="seawind-hero.js"></script>
+  <script src="section-pin-transitions.js"></script>
+  <script src="seawind-unify.js"></script>
   <script src="forms-config.js"></script>
   <script src="forms.js"></script>
   <script src="script.js"></script>
@@ -1312,7 +1323,8 @@
   <script src="splashcursor.js"></script>
   <script src="orbital-carousel.js"></script>
   <script src="round-carousel.js"></script>
-  <script src="hero/hero-3d.js"></script>
+  <script src="hero-modern.js"></script>
+  <script src="premium-animations.js"></script>
   <script>
     (function () {
       const root = document.getElementById('orbitalCarousel');

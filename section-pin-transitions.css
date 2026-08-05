@@ -1,0 +1,39 @@
+/* ======================================================================
+   SECTION PIN TRANSITIONS (v2 — height-aware)
+   Only sections that fit within one viewport get the true sticky
+   pin + crossfade treatment (like the hero). Taller, content-heavy
+   sections (grids, testimonials, pricing tables, etc.) get a
+   non-pinned scroll fade + rise instead, so their content is never
+   clipped or made unreachable.
+   ====================================================================== */
+
+.section{
+  position: relative;
+  z-index: 1;
+  will-change: transform, opacity, filter;
+}
+
+/* Applied by JS only to sections short enough to safely pin */
+.pin-scene{
+  position: sticky;
+  top: 0;
+  background: var(--bg, #f6f9f9);
+}
+
+/* Applied by JS to every other section: simple non-pinned reveal */
+.fade-scene{
+  position: relative;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .section{
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+.no-js .section{
+  opacity: 1 !important;
+  transform: none !important;
+}

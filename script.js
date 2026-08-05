@@ -2,12 +2,47 @@
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+(function () {
+  if (prefersReducedMotion) return;
+
+  if (!document.getElementById("scene")) {
+    const oceanCanvas = document.createElement("canvas");
+    oceanCanvas.id = "scene";
+    document.body.prepend(oceanCanvas);
+  }
+
+  const needsThree = typeof window.THREE === "undefined";
+  const needsSeawindHero = !window.__seawindHeroLoaded;
+  if (!needsThree && !needsSeawindHero) return;
+
+  function loadScript(src) {
+    const abs = new URL(src, window.location.href).href;
+    for (const s of document.scripts) {
+      if (s.src === abs) return Promise.resolve();
+    }
+    return new Promise((resolve, reject) => {
+      const el = document.createElement("script");
+      el.src = src;
+      el.async = true;
+      el.onload = () => resolve();
+      el.onerror = () => reject(new Error(`Failed to load ${src}`));
+      document.head.appendChild(el);
+    });
+  }
+
+  (needsThree
+    ? loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js")
+    : Promise.resolve()
+  ).then(() => (needsSeawindHero ? loadScript("seawind-hero.js") : null)).catch(() => {});
+})();
+
 // Page loader
 const pageLoader = document.getElementById("pageLoader");
 window.addEventListener("load", () => {
   document.body.classList.add("loaded");
   if (pageLoader) {
-    setTimeout(() => pageLoader.classList.add("hidden"), prefersReducedMotion ? 0 : 600);
+    // Upgraded loader: 1.2s brand moment, then smooth scale-out
+    setTimeout(() => pageLoader.classList.add("hidden"), prefersReducedMotion ? 0 : 1200);
   }
 
   // Transform all buttons into premium liquid gooey buttons dynamically!
@@ -116,15 +151,10 @@ function animateCounter(el) {
   else requestAnimationFrame(tick);
 }
 
-const statObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.querySelectorAll(".stat-num").forEach(animateCounter);
-      statObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.3 });
-document.querySelectorAll(".why-cards").forEach(el => statObserver.observe(el));
+// Counter animation handled by animations.js (one-time ScrollTrigger, no scrub)
+// Disabled here to prevent duplicate/reversible counting
+// const statObserver = ...
+document.querySelectorAll(".why-cards"); // no-op reference kept for safety
 
 // Particle canvas
 const canvas = document.getElementById("particleCanvas");
@@ -784,65 +814,10 @@ document.querySelectorAll(".reveal-left, .reveal-right").forEach(el => revealObs
   });
 })();
 
-// Dark / Light Mode Toggle
-(function() {
-  const sunSvg = `<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
-  const moonSvg = `<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
-
-  const btn = document.createElement('button');
-  btn.className = 'theme-toggle-btn';
-  btn.setAttribute('aria-label', 'Toggle dark mode');
-  btn.innerHTML = moonSvg;
-
-  // Place as fixed bottom-left button, back on body
-  const navInner = document.querySelector('.nav-inner');
-  if (navInner) {
-    const navRight = navInner.querySelector('.nav-right');
-    if (navRight) {
-      // Restore hamburger back to nav-inner and remove the wrapper
-      const hamburger = navRight.querySelector('.hamburger');
-      if (hamburger) navInner.appendChild(hamburger);
-      navRight.remove();
-    }
-  }
-  document.body.appendChild(btn);
-
-  const ripple = document.createElement('div');
-  ripple.className = 'theme-ripple';
-  document.body.appendChild(ripple);
-
-  const savedTheme = localStorage.getItem('seawind-theme') || 'light';
-  document.documentElement.setAttribute('data-theme', savedTheme);
-  btn.innerHTML = savedTheme === 'dark' ? sunSvg : moonSvg;
-
-  btn.addEventListener('click', () => {
-    const rect = btn.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const maxR = Math.hypot(Math.max(cx, window.innerWidth - cx), Math.max(cy, window.innerHeight - cy)) * 2;
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const newTheme = isDark ? 'light' : 'dark';
-
-    ripple.style.width = ripple.style.height = `${maxR}px`;
-    ripple.style.left = `${cx - maxR / 2}px`;
-    ripple.style.top = `${cy - maxR / 2}px`;
-    ripple.style.background = newTheme === 'dark' ? '#090b11' : '#f8fafc';
-    ripple.style.transform = 'scale(0)';
-    ripple.style.opacity = '1';
-    ripple.style.transition = 'none';
-    void ripple.offsetWidth;
-    ripple.style.transition = 'transform 0.65s cubic-bezier(0.4,0,0.2,1), opacity 0.65s ease';
-    ripple.style.transform = 'scale(1)';
-
-    setTimeout(() => {
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('seawind-theme', newTheme);
-      btn.innerHTML = newTheme === 'dark' ? sunSvg : moonSvg;
-      ripple.style.transition = 'opacity 0.3s ease';
-      ripple.style.opacity = '0';
-    }, 350);
-  });
-})();
+// Dark / Light Mode Toggle — REMOVED
+// Dark mode has been disabled from the site
+localStorage.removeItem('seawind-theme');
+document.documentElement.removeAttribute('data-theme');
 
 // Schedule Callback Drawer
 (function() {
@@ -1265,25 +1240,8 @@ document.querySelectorAll(".reveal-left, .reveal-right").forEach(el => revealObs
   estTab.addEventListener('click', openEstimator);
 })();
 
-// ─── FAQ Accordion ───────────────────────────────────────────────────────────
-(function() {
-  const faqItems = document.querySelectorAll('.faq-item');
-  
-  faqItems.forEach(item => {
-    const question = item.querySelector('.faq-question');
-    question.addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-      
-      // Close all other items
-      faqItems.forEach(other => {
-        if (other !== item) other.classList.remove('open');
-      });
-      
-      // Toggle current item
-      item.classList.toggle('open', !isOpen);
-    });
-  });
-})();
+// ─── FAQ Accordion — handled by premium-animations.js ────────────────────────
+// Removed duplicate to prevent click handler conflict
 
 // ─── Back to Top Button ───────────────────────────────────────────────────────
 (function () {

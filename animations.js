@@ -34,16 +34,18 @@
     el.addEventListener("mouseleave", () => ring?.classList.remove("hovering"));
   });
 
-  // Magnetic buttons
-  document.querySelectorAll(".btn-primary, .btn-nav, .btn-outline").forEach(btn => {
-    btn.addEventListener("mousemove", e => {
-      const r = btn.getBoundingClientRect();
-      const x = (e.clientX - r.left - r.width / 2) * 0.2;
-      const y = (e.clientY - r.top - r.height / 2) * 0.2;
-      btn.style.transform = `translate(${x}px, ${y}px)`;
+  // Magnetic buttons — guarded so premium-animations.js doesn't double-apply
+  if (!window._swMagneticDone) {
+    document.querySelectorAll(".btn-primary, .btn-nav, .btn-outline").forEach(btn => {
+      btn.addEventListener("mousemove", e => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.2;
+        const y = (e.clientY - r.top - r.height / 2) * 0.2;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
     });
-    btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
-  });
+  }
 
   // Magnetic links and social icons
   document.querySelectorAll(".nav-links a:not(.btn-nav), .social-links a").forEach(link => {
@@ -566,18 +568,28 @@
       );
     }
 
-    // Counter animation synchronized with card appearance
-    countersData.forEach((c, idx) => {
-      const counterObj = { val: 0 };
-      tl.to(counterObj, {
-        val: c.target,
-        duration: 0.5,
-        ease: 'power1.out',
-        onUpdate: function() {
-          c.el.textContent = Math.floor(counterObj.val).toLocaleString();
+    // Counter animation — fires ONCE on enter, never reverses with scroll
+    // Separated from the scrub timeline intentionally
+    if (countersData.length) {
+      ScrollTrigger.create({
+        trigger: whySection,
+        start: 'top 70%',
+        once: true,
+        onEnter: function() {
+          countersData.forEach(function(c) {
+            const dur = 2000;
+            const startTime = performance.now();
+            (function tick(now) {
+              const p = Math.min((now - startTime) / dur, 1);
+              const ease = 1 - Math.pow(1 - p, 4);
+              c.el.textContent = Math.floor(ease * c.target).toLocaleString();
+              if (p < 1) requestAnimationFrame(tick);
+              else c.el.textContent = c.target.toLocaleString();
+            })(performance.now());
+          });
         }
-      }, 0.35 + idx * 0.1);
-    });
+      });
+    }
 
     // --- PHASE 2: ACTIVE MID-STATION ---
     tl.to({}, { duration: 0.4 }); // Hold state while user scrolls through section center

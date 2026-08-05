@@ -1,0 +1,416 @@
+/* ======================================================================
+   SEAWIND — UNIFIED DESIGN SYSTEM
+   Brings the whole site onto the hero build's language: Satoshi/Clash
+   Display/JetBrains Mono, the ink/current/squall palette, and the
+   glass-card + soft-shadow treatment used throughout the hero.
+   Loaded LAST so it cascades over style.css / premium-animations.css /
+   hero-modern.css etc. Nothing here removes functional JS hooks —
+   only visual layers are added.
+   ====================================================================== */
+
+:root{
+  --bg:#F6F9F9;
+  --bg-raised:#FFFFFF;
+  --ink:#0B1420;
+  --mist:#5B6674;
+  --mist-dim:#8A93A0;
+  --current:#0056CA;
+  --squall:#00214D;
+  --line:rgba(11,20,32,0.10);
+  --line-strong:rgba(11,20,32,0.20);
+  --glass-bg:linear-gradient(165deg, rgba(255,255,255,0.74) 0%, rgba(255,255,255,0.46) 100%);
+  --glass-shadow:0 1px 0 rgba(255,255,255,0.95) inset, 0 0 0 1px rgba(11,20,32,0.03), 0 18px 40px -18px rgba(11,20,32,0.20), 0 40px 80px -28px rgba(11,20,32,0.26);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+/* ---------- base ---------- */
+html{scroll-behavior:smooth;}
+
+/* Font display swap so layout doesn't block on Fontshare */
+html body{
+  background:var(--bg) !important;
+  color:var(--ink) !important;
+  font-family:'Satoshi','Inter',sans-serif !important;
+  font-display:swap;
+}
+
+/* Triple-specificity heading override so nothing in style.css wins */
+html body h1,
+html body h2,
+html body h3,
+html body h4,
+html body h5,
+html body h6{
+  font-family:'Clash Display','Space Grotesk',sans-serif !important;
+  color:var(--ink) !important;
+  letter-spacing:-0.02em;
+}
+
+/* Inner page hero / page header titles */
+html body .page-title,
+html body .inner-hero-title,
+html body .portfolio-title,
+html body .blog-title,
+html body .service-title,
+html body .section-title {
+  font-family:'Clash Display','Space Grotesk',sans-serif !important;
+  font-weight:700 !important;
+  letter-spacing:-0.025em !important;
+}
+
+/* Body text */
+html body p,
+html body li,
+html body span,
+html body label {
+  font-family:'Satoshi','Inter',sans-serif !important;
+}
+
+/* Monospace / label / eyebrow text */
+html body .eyebrow,
+html body .section-tag,
+html body .kicker,
+html body small,
+html body code,
+html body .mono {
+  font-family:'JetBrains Mono','Courier New',monospace !important;
+  letter-spacing:0.08em;
+}
+
+p{color:var(--mist);}
+a{transition:color 0.25s var(--ease), background 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.25s var(--ease);}
+::selection{background:var(--current);color:#fff;}
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:99px;}
+
+/* kill the old dark/neon decorative atmosphere so our light palette reads cleanly */
+.noise-overlay,.mesh-bg,.site-waves{opacity:0.25 !important; mix-blend-mode:multiply;}
+
+/* ---------- custom cursor (reuses existing #cursorGlow / #cursorRing) ---------- */
+.cursor-glow{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--ink) !important;
+  box-shadow:none !important;
+  filter:none !important;
+}
+.cursor-ring{
+  width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--line-strong) !important;
+  background:transparent !important;
+  transition:width 0.25s var(--ease), height 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.cursor-ring.active,.cursor-ring.cursor-hover{
+  width:56px;height:56px;
+  border-color:transparent !important;
+  background:linear-gradient(100deg, rgba(0,86,202,0.14), rgba(0,33,77,0.14)) !important;
+}
+
+/* ---------- progress bar ---------- */
+.scroll-progress{
+  background:linear-gradient(90deg,var(--current),var(--squall)) !important;
+  height:2px !important;
+}
+
+/* ---------- nav ---------- */
+.nav{
+  background:rgba(246,249,249,0.72) !important;
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  border-bottom:1px solid var(--line) !important;
+  box-shadow:none !important;
+}
+.nav-links a{
+  color:var(--mist) !important;
+  font-weight:500;font-size:0.92rem;
+}
+.nav-links a:hover{color:var(--ink) !important;}
+.nav-links a.btn-nav{
+  background:linear-gradient(100deg,var(--current),var(--squall)) !important;
+  color:#fff !important;border:none !important;border-radius:99px;
+  padding:10px 20px !important;
+  box-shadow:0 10px 24px -10px rgba(0,86,202,0.5);
+}
+.nav-links a.btn-nav:hover{box-shadow:0 16px 34px -12px rgba(0,86,202,0.6);}
+.hamburger span{background:var(--ink) !important;}
+
+/* ---------- section rhythm ---------- */
+.section-tag{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:'JetBrains Mono',monospace !important;font-size:12px !important;
+  letter-spacing:0.14em;text-transform:uppercase;color:var(--mist) !important;
+  padding:6px 14px !important;border:1px solid var(--line-strong) !important;border-radius:99px;
+  background:rgba(255,255,255,0.55) !important;
+  box-shadow:0 1px 0 rgba(255,255,255,0.8) inset, 0 6px 16px -10px rgba(11,20,32,0.25);
+}
+.section-tag::before{
+  content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--current);
+  box-shadow:0 0 0 3px rgba(0,86,202,0.14), 0 0 10px 2px rgba(0,86,202,0.45);
+  flex-shrink:0;
+}
+.gradient-text{
+  background:linear-gradient(100deg,var(--current),var(--squall)) !important;
+  -webkit-background-clip:text !important;background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+}
+.section-header p{color:var(--mist);}
+
+/* ---------- buttons ---------- */
+.btn-primary,.hm-btn-primary,.cta-submit-btn,.domain-search-btn,
+.filter-btn.active,.tab-btn.active{
+  background:linear-gradient(100deg,var(--current),var(--squall)) !important;
+  color:#fff !important;border:none !important;font-weight:700 !important;
+  box-shadow:0 10px 24px -10px rgba(0,86,202,0.5), 0 2px 6px -2px rgba(0,86,202,0.4) !important;
+  transition:transform 0.25s var(--ease), box-shadow 0.25s var(--ease) !important;
+}
+.btn-primary:hover,.hm-btn-primary:hover,.cta-submit-btn:hover,.domain-search-btn:hover{
+  box-shadow:0 16px 34px -12px rgba(0,86,202,0.6), 0 4px 10px -3px rgba(0,86,202,0.5) !important;
+  transform:translateY(-2px);
+}
+.btn-outline,.hm-btn-ghost,.domain-tool-btn,.tab-btn,.filter-btn{
+  background:rgba(255,255,255,0.5) !important;
+  color:var(--ink) !important;
+  border:1px solid var(--line-strong) !important;
+  font-weight:600 !important;
+  transition:border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.25s var(--ease) !important;
+}
+.btn-outline:hover,.hm-btn-ghost:hover,.domain-tool-btn:hover,.tab-btn:hover,.filter-btn:hover{
+  border-color:var(--current) !important;
+  background:rgba(0,86,202,0.06) !important;
+  color:var(--current) !important;
+}
+.card-link,.portfolio-card-body h3 a,.blog-card-body h3 a{color:var(--current) !important;}
+
+/* ---------- glass cards (broad coverage across all card-style components) ---------- */
+.service-card,.portfolio-card,.testimonial-card,.pricing-card,.award-card,
+.orbital-card,.why-card,.blog-card,.domain-glass-card{
+  background:var(--glass-bg) !important;
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(255,255,255,0.7) !important;
+  border-radius:22px !important;
+  box-shadow:var(--glass-shadow) !important;
+  color:var(--ink);
+  transition:transform 0.4s var(--ease), box-shadow 0.4s var(--ease) !important;
+}
+.service-card:hover,.portfolio-card:hover,.award-card:hover,.orbital-card:hover,.blog-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 1px 0 rgba(255,255,255,0.95) inset, 0 26px 50px -18px rgba(11,20,32,0.26), 0 60px 110px -30px rgba(11,20,32,0.34) !important;
+}
+.service-card h3,.blog-card-body h3,.portfolio-card-body h3,.award-content h4,.why-card h4{
+  color:var(--ink) !important;
+}
+.service-card p,.blog-card-body p,.portfolio-card-body p,.testimonial-card p,.why-card p{
+  color:var(--mist) !important;
+}
+.pricing-card.featured{
+  border-color:var(--current) !important;
+  box-shadow:0 1px 0 rgba(255,255,255,0.95) inset, 0 0 0 2px rgba(0,86,202,0.25), 0 26px 50px -18px rgba(11,20,32,0.26) !important;
+}
+.pricing-badge{
+  background:linear-gradient(100deg,var(--current),var(--squall)) !important;
+  color:#fff !important;
+}
+.stat-value,.hm-stat-num,.stat-num{
+  font-family:'JetBrains Mono',monospace !important;
+  color:var(--ink) !important;font-variant-numeric:tabular-nums;
+}
+.award-year-badge{background:var(--ink) !important;color:#fff !important;}
+
+/* ---------- marquees / trust strip ---------- */
+.trust-marquee,.marquee-wrap{
+  background:transparent !important;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.trust-title{
+  font-family:'JetBrains Mono',monospace !important;font-size:12px !important;
+  letter-spacing:0.14em;color:var(--mist-dim) !important;
+}
+.trust-logos img{filter:opacity(0.8);}
+.marquee-track span{color:var(--mist) !important;font-family:'Clash Display',sans-serif;}
+.marquee-track .dot{color:var(--current) !important;}
+
+/* ---------- testimonials ---------- */
+.testimonial-card{padding:1.8rem !important;}
+.testimonial-card .stars{color:var(--current) !important;letter-spacing:2px;}
+.client-info strong{color:var(--ink) !important;}
+.client-info span{color:var(--mist-dim) !important;}
+.client-avatar{
+  background:linear-gradient(100deg,var(--current),var(--squall)) !important;
+  color:#fff !important;font-family:'JetBrains Mono',monospace;
+}
+
+/* ---------- domain / why-us decorative recolor ---------- */
+.domain-wave,.why-wave,.cta-wave,.why-wave-1,.why-wave-2,.why-wave-3{
+  background:linear-gradient(180deg, rgba(0,86,202,0.08), transparent) !important;
+}
+.domain-dec-circle,.why-dec-circle,.cta-orb,.why-orb{
+  background:radial-gradient(circle, rgba(0,86,202,0.14), transparent 70%) !important;
+}
+.domain-feature,.why-list li{color:var(--mist) !important;}
+.domain-icon,.check{color:var(--current) !important;}
+.domain-input,.domain-select{
+  background:rgba(255,255,255,0.7) !important;border:1px solid var(--line-strong) !important;color:var(--ink) !important;
+}
+
+/* ---------- FAQ ---------- */
+.faq-item{
+  background:rgba(255,255,255,0.5) !important;
+  border:1px solid var(--line) !important;
+  border-radius:16px !important;
+  overflow:visible;  /* was hidden — was clipping click area */
+}
+.faq-question{
+  color:var(--ink) !important;
+  font-family:'Clash Display',sans-serif;
+  font-weight:600;
+  cursor:pointer !important;
+  pointer-events:auto !important;
+  position:relative;
+  z-index:2;
+}
+.faq-question .faq-icon{color:var(--current) !important;}
+.faq-answer p{color:var(--mist) !important;}
+/* Ensure answer is clipped but not the button */
+.faq-answer{overflow:hidden;}
+
+/* ---------- CTA section ---------- */
+.cta-inner,.why-choose-inner{
+  background:var(--glass-bg) !important;
+  border:1px solid rgba(255,255,255,0.7) !important;
+  box-shadow:var(--glass-shadow) !important;
+  border-radius:28px !important;
+}
+.cta-form input{
+  background:rgba(255,255,255,0.7) !important;
+  border:1px solid var(--line-strong) !important;
+  color:var(--ink) !important;
+}
+.cta-form input::placeholder{color:var(--mist-dim);}
+
+/* ---------- footer ---------- */
+.footer{
+  background:var(--bg) !important;
+  border-top:1px solid var(--line);
+  color:var(--mist) !important;
+}
+.footer h5{color:var(--ink) !important;font-family:'Clash Display',sans-serif;}
+.footer a{color:var(--mist) !important;}
+.footer a:hover{color:var(--current) !important;}
+.footer-bottom{border-top:1px solid var(--line) !important;color:var(--mist-dim) !important;}
+.social-links a{
+  border:1px solid var(--line-strong) !important;color:var(--mist) !important;
+}
+.social-links a:hover{border-color:var(--current) !important;color:var(--current) !important;}
+
+/* ---------- magnetic + tilt utility states (JS toggles these) ---------- */
+[data-magnetic]{will-change:transform;}
+.tilt-card{will-change:transform;}
+
+/* ── Force all section headers always visible ─────────────── */
+/* The .reveal opacity:0 causes headers to stay hidden if JS
+   IntersectionObserver fires too late or not at all */
+.section-header {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+}
+.section-header h2,
+.section-header p,
+.section-header .section-tag,
+.section-header .header-badge {
+  opacity: 1 !important;
+  transform: none !important;
+}
+/* Re-enable the animated underline draw — CSS only, no JS needed */
+.section-header .heading-underline {
+  transform: scaleX(1) !important;
+}
+/* Split chars — show immediately */
+.section-header .split-char {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ── Domain section: fix canvas z-index only ──────────────── */
+.domain-bg-canvas { z-index: 0 !important; }
+.domain-light-rays { z-index: 0 !important; }
+.domain-dec-circle { z-index: 0 !important; }
+
+/* ── Global ocean canvas: z-index 0 so it shows above the page bg ── */
+canvas#scene {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ── Body/html must be transparent so canvas shows through ─────── */
+html, body {
+  background: transparent !important;
+}
+
+/* ── Each section gets a semi-transparent bg so canvas shows ────── */
+.section, section {
+  background: rgba(246,249,249,0.88) !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero is fully transparent — ocean canvas visible through it ─── */
+.hero-wrap, .hero-pin {
+  background: transparent !important;
+}
+
+/* Domain glass card overflow ────────────────────────────────── */
+.domain-glass-card {
+  overflow: hidden !important;
+}
+
+/* ── Why-us section: fix z-index only ───────────────────────── */
+.why-bg-canvas { z-index: 0 !important; }
+.why-light-rays { z-index: 0 !important; }
+.why-dec-circle { z-index: 0 !important; }
+
+/* ── Dark mode toggle: completely removed ───────────────────── */
+.theme-toggle-btn { display: none !important; }
+.theme-ripple { display: none !important; }
+
+/* ── Ensure light theme always — override any leftover dark vars ── */
+[data-theme='dark'] {
+  --bg: rgba(248,250,252,0.9) !important;
+  --bg2: rgba(241,245,249,0.95) !important;
+  --surface: #ffffff !important;
+  --border: rgba(0,85,204,0.15) !important;
+  --text: #0f172a !important;
+  --muted: #475569 !important;
+}
+[data-theme='dark'] body { background: transparent !important; color: #0f172a !important; }
+[data-theme='dark'] section, [data-theme='dark'] .section { background: rgba(246,249,249,0.88) !important; }
+[data-theme='dark'] .nav { background: rgba(255,255,255,0.95) !important; border-color: rgba(0,85,204,0.15) !important; }
+[data-theme='dark'] h1,[data-theme='dark'] h2,[data-theme='dark'] h3,
+[data-theme='dark'] h4,[data-theme='dark'] h5 { color: #0f172a !important; }
+
+/* ── Page hero sections: always visible ─────────────────────── */
+.page-hero {
+  position: relative !important;
+  z-index: 1 !important;
+  background: rgba(246,249,249,0.92) !important;
+}
+.page-hero-content,
+.page-hero-content h1,
+.page-hero-content p,
+.page-hero-content .section-tag,
+.page-hero-content .breadcrumb {
+  opacity: 1 !important;
+  transform: none !important;
+  color: var(--ink) !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+.page-hero-content h1 { color: var(--ink) !important; }
+.page-hero-content p  { color: var(--mist) !important; }
